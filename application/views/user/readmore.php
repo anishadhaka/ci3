@@ -12,14 +12,14 @@
     </div>
 </section>
 
-<div class="col-md-3" style="padding-left: 100px; margin-top: 40px;">
+<div class="side" style="padding-left: 80px;padding-right:30px; padding-top:20px; margin-top: 30px; margin-right: 90px;">
         
         <ul class="list">
           
           <?php foreach ($sideblog as $row):?>
             <li class="li-container"><img src="<?= base_url('uploads/images/' . $row['image']); ?>" class="card-img-top" ?>
             <a href="<?= base_url('UserController/read_more/' . $row['id']); ?>">
-              <h5 class="card-title"><?= $content=substr($row['title'],0,20); ?></h5>
+              <h5 class="card-title"><?= $content=substr($row['title'],0,100); ?></h5>
               </a>
             </li>
             <?php endforeach; ?>
