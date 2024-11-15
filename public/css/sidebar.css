@@ -1,0 +1,42 @@
+
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    color: white;
+    display: flex;
+    flex-direction: column;
+  height:1100px;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    background-color: #007bff;
+}
+
+.sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+    cursor: pointer;
+    width: 100%;
+}
+
+.sidebar-menu li {
+    padding: 15px 20px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.sidebar-menu li a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    display: inline-block;
+}
+
+.sidebar-menu li:hover {
+    background-color: #007bff;
+    cursor: pointer;
+    width: 100%;
+}

@@ -1,0 +1,18 @@
+
+
+#form{
+  border: 1px solid rgb(240, 243, 234);
+  box-shadow: 5px 10px 8px #888888;
+  padding: 20px;
+  background-color: rgb(221 226 240);
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#heading{
+  text-align: center;
+  color: #007bff;
+  font-weight: bold;
+}
+
+
