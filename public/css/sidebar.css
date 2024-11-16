@@ -40,3 +40,34 @@
     cursor: pointer;
     width: 100%;
 }
+
+.sidebar-menu .dropdown-menu {
+    display: none;
+    list-style-type: none;
+    padding-left: 0;
+    background-color: #444;
+    margin: 0;
+}
+
+.sidebar-menu .dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+/* Style for dropdown items */
+.sidebar-menu .dropdown-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.sidebar-menu .dropdown-menu li a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+}
+
+.sidebar-menu .dropdown-menu li:hover {
+    background-color: #007bff;
+    cursor: pointer;
+}

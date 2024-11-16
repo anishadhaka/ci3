@@ -29,6 +29,7 @@ class UserController extends CI_Controller {
 		$this->load->library('upload');
 		$this->load->library('session');
 		$this->load->helper('url'); 
+		// $this->load->model('news');
         
     } 
 
@@ -127,6 +128,19 @@ public function loginvalidation() {
 			redirect('UserController/login');
 		}
 	}
+
+// profile
+public function profile(){
+    $this->check_login();
+     $id = $this->session->userdata('id');
+     $this->load->model('userlist');
+     $data['user'] = $this->userlist->fetchdata($id);
+	 $this->load->view('user/header');
+	 $this->load->view('user/sidebar');
+	 $this->load->view('user/topbar');
+     $this->load->view('user/profile', $data);
+
+    }	
       
 //for userlist pagination
       public function view()
@@ -260,7 +274,7 @@ public function password_page()
     $this->load->view('user/changeuserpass',$data);
 	$this->load->view('user/footer');
 }
-
+// password
 public function userpass()
 {
     // $this->check_login();
@@ -277,7 +291,7 @@ public function userpass()
 
     ];
 	
-// echo $data ;
+// print_r( $data) ;
 // die;
     if ($this->form_validation->run() == FALSE) {
 		$this->load->view('user/header');
@@ -298,11 +312,12 @@ public function userpass()
             redirect('UserController/view', 'refresh');
         } else {
             $this->session->set_flashdata('error', 'Invalid Old Password');
-			$this->load->view('user/header');
-			$this->load->view('user/sidebar');
-			$this->load->view('user/topbar');
-			$this->load->view('user/changeuserpass');
-			$this->load->view('user/footer');
+			redirect('UserController/userpass', $result);
+			// $this->load->view('user/header');
+			// $this->load->view('user/sidebar');
+			// $this->load->view('user/topbar');
+			// $this->load->view('user/changeuserpass',$result);
+			// $this->load->view('user/footer');
         }
     }
 }
@@ -512,15 +527,17 @@ public function blogdelete($user){
 
 //for blogsite
 
-public function blogsite(){
-	$this->load->model('userlist');
-	$data['user']= $this->userlist->blogsite();
+public function blogsite() {
+    $this->load->model('userlist');
+    
+    $data['user'] = $this->userlist->blogsite(); 
+    $data['news'] = $this->userlist->blognews();  
+
 	$this->load->view('user/blogsiteheader');
-	$this->load->view('user/blogsite', $data);
-	$this->load->view('user/blogsitefooter');
-
-
-    }
+    $this->load->view('user/blogheader2');
+    $this->load->view('user/blogsite', $data);  
+    $this->load->view('user/blogsitefooter');
+}
 // blogsite about 
 
 public function blogsiteabout(){
@@ -546,6 +563,7 @@ public function blogsitecategories(){
 	$this->load->model('userlist');
 	$data['user']= $this->userlist->categorias();
 	$this->load->view('user/blogsiteheader');
+	
 	$this->load->view('user/categorias', $data);
 	$this->load->view('user/blogsitefooter');
 
@@ -565,6 +583,74 @@ public function blogsitecategories(){
 
     }
 
+// blogsite blogcategoriasite 
+
+public function blogcategoriasite(){
+	$this->load->model('userlist');
+	$data['user']= $this->userlist->categorias();
+	// $this->load->view('user/blogsiteheader');
+	$this->load->view('user/blogheader2');
+	$this->load->view('user/blogcategorias', $data);
+	$this->load->view('user/blogsitefooter');
+
+
+    }
+
+// blogsite newscategoriasite 
+
+public function newscategoriasite(){
+	$this->load->model('userlist');
+	$data['user']= $this->userlist->newscategorias();
+	// $this->load->view('user/blogsiteheader');
+	$this->load->view('user/blogheader2');
+	$this->load->view('user/newscategorias', $data);
+	$this->load->view('user/blogsitefooter');
+
+
+    }	
+
+
+
+//contactus
+public function contactusdata (){
+    $data['name'] = $this->input->post('name');
+	$data['email'] = $this->input->post('email');
+    $data['message'] = $this->input->post('message');
+   
+	$this->form_validation->set_rules('name', 'name', 'required');
+	$this->form_validation->set_rules('email', 'email', 'required');
+    $this->form_validation->set_rules('message', 'message', 'required');
+  
+	if ($this->form_validation->run() == FALSE)
+	{ 
+		// echo"kjnk"; die;
+
+	  $this->load->view('user/contactus');	
+	}
+	else
+	{
+	  $this->load->model('userlist');
+		$check = $this->userlist->contact($data);
+		if($check == true){
+			// echo"kjnk"; die;
+			redirect('contactus');
+			// return Content("<script language='javascript' type='text/javascript'>alert('Save Successfully');</script>");
+		 }
+	}
+  }	
+  
+  // Read Morenews
+  public function read_morenews($post_id) {
+	$data['post'] = $this->userlist->get_news_by_id($post_id); 
+	if (empty($data['post'])) {
+		show_404(); 
+	}
+	$data['sideblog'] = $this->userlist->sidenews();
+	$this->load->view('user/blogsiteheader');
+	$this->load->view('user/newsreadmore', $data); 
+$this->load->view('user/blogsitefooter');
+
+}
 
 
 
@@ -703,6 +789,147 @@ public function editpage($user) {
 		
 	}
 
+}
+
+// for news
+public function news()
+
+{
+  $this->load->model('news');
+  $config = array();
+  $config['base_url'] = base_url('UserController/news'); 
+   //   var_dump($this->news); 
+   // die();
+  $config['total_rows'] = $this->news->getCount();
+  $config['per_page'] = 5;                                 
+  $config['uri_segment'] = 3; 
+  
+  $this->pagination->initialize($config);
+  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+  $data['users'] = $this->news->get_news($config['per_page'], $page);
+  $data['links'] = $this->pagination->create_links();
+  $this->load->model('news');
+   $this->load->view('user/header');
+   $this->load->view('user/sidebar');
+   $this->load->view('user/topbar');
+	$this->load->view('user/news',['data'=>$data]);
+	$this->load->view('user/footer');
+} 
+
+
+
+// edit editnews     
+		
+public function editnews($user) {
+	$this->load->model('news');
+	$data['user'] = $this->news->editnews($user);
+	$this->load->model('userlist');
+	$this->load->view('user/header');
+	$this->load->view('user/sidebar');
+	$this->load->view('user/topbar');
+	$this->load->view('user/updatenews', $data);
+
+}
+	
+// for updatenews
+	public function updatenews() {
+	//    $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
+
+	$this->form_validation->set_rules('name', 'name', 'required');
+	$this->form_validation->set_rules('email', 'title', 'required');
+	$this->form_validation->set_rules('password', 'description', 'required');
+
+	
+	
+	 $data['name'] = $this->input->post('name');
+	 $data['title'] = $this->input->post('title');
+	 $data['description'] = $this->input->post('description');
+
+	 $data['id'] = $this->input->post('id');
+	 $user=$data['id'];
+	//  print_r($user);
+	//  die;
+	 if (!$this->form_validation->run() == FALSE) {
+		echo "hello";
+		die;
+		$this->load->model('news');
+		$data['user'] = $this->news->editnews($user);
+		$this->load->view('user/updatenews',$data);
+	} else {
+		 $this->load->model('news');
+		$this->news->updatenews($user, $data);
+		// echo "hello";
+		// die;
+		redirect('UserController/news');
+
+		
+	}
+
+}
+// add addnews
+	     
+   public function addnews($data=array())
+   {    $this->load->view('user/header');
+	    $this->load->view('user/sidebar');
+	    $this->load->view('user/topbar');
+	    $this->load->view('user/addnews');
+	    $this->load->view('user/footer');
+   }
+
+   public function addnewsdata() {
+    $data['name'] = $this->input->post('name');
+    $data['title'] = $this->input->post('title');
+    $data['description'] = $this->input->post('description');
+
+	$data['image']=$this->input->post('image');
+
+    // Form validation
+    $this->form_validation->set_rules('name', 'Name', 'required');
+    $this->form_validation->set_rules('title', 'Title', 'required');
+    $this->form_validation->set_rules('description', 'Description', 'required');
+
+
+    if ($this->form_validation->run() == FALSE) {
+        $this->load->view('user/header');
+	    $this->load->view('user/sidebar');
+	    $this->load->view('user/topbar');
+	    $this->load->view('user/addnews');
+	    $this->load->view('user/footer');
+    } else {
+        // Image upload configuration
+		if ($_FILES['image']['name']) {
+            $config['upload_path'] = './uploads/images/'; 
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';  
+            $config['max_size'] = 20480; 
+            $config['file_name'] = time() . '_' . $_FILES['image']['name'];  
+            
+            $this->load->library('upload', $config);
+    
+            if (!$this->upload->do_upload('image')) {
+                $data['upload_error'] = $this->upload->display_errors();
+                $this->load->view('user/newsedit', $data);
+                return;  
+            } else {
+                $upload_data = $this->upload->data();
+                $data['image'] = $upload_data['file_name'];
+           }
+        }
+		
+        $this->load->model('news');
+        $check = $this->news->addnews($data);  
+
+        if ($check == true) {
+            redirect('UserController/news'); 
+        }
+    }
+}
+
+ // delete blog 
+ public function deletenews($user){
+		
+          $this->load->model('news');
+          $this->news->newsdelete($user);
+          redirect('UserController/news', 'refresh'); 
 }
 
 }

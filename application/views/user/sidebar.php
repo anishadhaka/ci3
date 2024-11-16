@@ -4,10 +4,19 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="<?php echo base_url('UserController/welcome');?>"><i class="fa-solid fa-bars"></i> Dashboard</a></li>
-                <li><a href="<?php echo base_url('UserController/view');?>"> <i class="fa-solid fa-address-book"></i> userlist</a></li>
-                <li><a href="<?php echo base_url('UserController/blog');?>"> <i class="fa-solid fa-bars-progress"></i> Bloglist</a></li>
-                <li><a href="<?php echo base_url('UserController/pageslist');?>"> <i class="fa-solid fa-landmark"></i> Pages_list</a></li>
-                <!-- <li><a href="#"> <i class="fa-solid fa-bug"></i> Reports</a></li>
-                <li><a href="#"> <i class="fa-solid fa-gear"></i> Settings</a></li> -->
+                <li><a href="<?php echo base_url('UserController/profile');?>"> <i class="fa-solid fa-user"></i> Profile</a></li>
+                <li><a href="<?php echo base_url('UserController/view');?>"> <i class="fa-solid fa-users"></i> userlist</a></li>
+                <!-- <li><a href="<?php echo base_url('UserController/blog');?>"> <i class="fa-solid fa-bars-progress"></i> Bloglist</a></li> -->
+                <li class="dropdown">
+            <a href="<?php echo base_url('UserController/blog');?>" class="dropdown-toggle"> <i class="fa-solid fa-bars-progress"></i> Bloglist </a>
+            <ul class="dropdown-menu">
+                <li><a href="<?php echo base_url('UserController/addblog');?>"><i class="fa-solid fa-plus"></i> Create Blog</a></li>
+                <li><a href="<?php echo base_url('UserController/editblog/'.$user['id'] );?>"><i class="fa-solid fa-edit"></i> Manage Blogs</a></li>
+                <li><a href="<?php echo base_url('UserController/blog_archive');?>"><i class="fa-solid fa-archive"></i> Archived Blogs</a></li>
+            </ul>
+        </li>
+                <li><a href="<?php echo base_url('UserController/pageslist');?>"> <i class="fa-solid fa-file"></i> Pages_list</a></li>
+                
+                <li><a href="<?php echo base_url('UserController/news');?>"> <i class="fa-solid fa-newspaper"></i> News</a></li>
             </ul>
         </nav>

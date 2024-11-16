@@ -35,7 +35,7 @@
            
                 <td>
                 <?php if (!empty($user['image'])): ?>
-                    <img src="<?php echo base_url('uploads/images/' . $user['image']); ?>" alt="Blog Image" height="100%">
+                    <img src="<?php echo base_url('uploads/images/' . $user['image']); ?>" alt="Blog Image" height="70">
                 <?php else: ?>
                     <span>No Image</span>
                 <?php endif; ?>

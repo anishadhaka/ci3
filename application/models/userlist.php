@@ -7,6 +7,18 @@ class userlist extends CI_Model {
       return  $result ;
     }
 
+
+// profile
+          public function fetchdata($id){
+          $this->db->where("id",$id);
+          $query= $this->db->get("form");
+          $result=$query->row_array();
+        //   print_r($result); 
+        //   die;
+          return $result;
+
+       }    
+
 // for delete
        public function delete_item($id)
        {
@@ -172,13 +184,17 @@ public function recycledelete($user)
    
 
 // blogsite
-    public function blogsite(){
-        $this->db->where("recycle",1);
-      $query=  $this->db->get("bloglist");
-      return $query->result_array();
-
-
+public function blogsite() {
+    $this->db->where("recycle", 1);
+    $query = $this->db->get("bloglist");
+    return $query->result_array();  
 }
+
+public function blognews() {
+    $query = $this->db->get("news");
+    return $query->result_array();  
+}
+
 // blogsite about
 public function about(){
     $this->db->where("recycle",1);
@@ -195,6 +211,28 @@ public function categorias(){
 
 
 }
+//blogsite newscategorias
+public function newscategorias(){
+  $query=  $this->db->get("news");
+  return $query->result_array();
+
+
+}
+//contactus data to db
+public function contact($data) {
+    // print_r($data);
+    // die;
+    $data = array(
+        'name' => $data['name'] ,
+        'email' => $data['email'] ,
+        'message' => $data['message']  
+     );
+     
+     $this->db->insert('contactus', $data);
+     return true ;
+
+ 
+}
 // readmore
 public function get_post_by_id($post_id) {
     $this->db->where('id', $post_id); 
@@ -204,6 +242,17 @@ public function get_post_by_id($post_id) {
 public function sideblog(){
     $this->db->where("recycle", 1);
     $query = $this->db->get("bloglist");
+    return $query->result_array();
+   }
+
+   // readmorenews
+public function get_news_by_id($post_id) {
+    $this->db->where('id', $post_id); 
+    $query = $this->db->get('news');
+    return $query->row_array();
+}
+public function sidenews(){
+    $query = $this->db->get("news");
     return $query->result_array();
    }
 

@@ -25,10 +25,12 @@
 
     <div class="contact-form">
       <h2>Get in Touch</h2>
-      <form action="#" method="POST">
+      <form    method="post" action="<?php echo base_url('UserController/contactusdata');?>">
         <div class="input-group">
           <label for="name">Your Name</label>
           <input type="text" id="name" name="name" placeholder="Enter your name" required>
+          <input type="hidden" id="id" name="id" placeholder="" required>
+
         </div>
 
         <div class="input-group">
