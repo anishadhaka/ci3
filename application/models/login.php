@@ -11,5 +11,18 @@ class login extends CI_Model {
         return false;
     }
 }
+public function user(){
+    return $this->db->count_all_results('form');
+}
+public function Blogs(){
+    $this->db->where('recycle',1);
+    return $this->db->count_all_results('bloglist');
+}
+public function News(){
+    return $this->db->count_all_results('news');
+}
+public function pages(){
+    return $this->db->count_all_results('pageslist');
+}
 }
 ?>

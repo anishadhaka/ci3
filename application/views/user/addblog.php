@@ -12,6 +12,26 @@
                        <label  for="title">Title: </label>
                        <input  type="text" name="title" placeholder="" >      
                     </div>
+                     
+                    <div class="input">
+                       <label  for=" SEO_Title">SEO Title: </label>
+                       <input  type="text" name="SEO_Title" placeholder="" >      
+                    </div>
+
+                    <div class="input">
+                       <label  for="MetaDescription">MetaDescription: </label>
+                       <input  type="text" name="MetaDescription" placeholder="" >      
+                    </div>
+
+                    <div class="input">
+                       <label  for="MetaKeyword">MetaKeyword: </label>
+                       <input  type="text" name="MetaKeyword" placeholder="" >      
+                    </div>
+
+                    <div class="input">
+                       <label  for="SEO_Robat">SEO Robat: </label>
+                       <input  type="text" name="SEO_Robat" placeholder="" >      
+                    </div>
 
                     <div class="input">
                       <label  for="description">Decription: </label>

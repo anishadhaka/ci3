@@ -28,7 +28,7 @@
                        <td> <?php echo $user['description'] ?></td> 
                             <td>
                             <?php if (!empty($user['image'])): ?>
-                                <img src="<?php echo base_url('uploads/images/' . $user['image']); ?>" alt=" Image" height="70">
+                                <img src="<?php echo base_url('uploads/images/' . $user['image']); ?>" alt=" Image" height="200">
                             <?php else: ?>
                                 <span>No Image</span>
                             <?php endif; ?>

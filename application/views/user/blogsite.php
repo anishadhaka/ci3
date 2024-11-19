@@ -14,7 +14,7 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <button id="loadMore" class="load-more-btn">Load More</button>
+    <!-- <button id="loadMore" class="load-more-btn">Load More</button> -->
 </section>
 
 <section class="featured-reviews">
@@ -29,7 +29,7 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <button id="loadMore2" class="load-more-btn">Load More</button>
+    <!-- <button id="loadMore2" class="load-more-btn">Load More</button> -->
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

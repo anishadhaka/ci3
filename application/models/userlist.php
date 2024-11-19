@@ -62,11 +62,11 @@ class userlist extends CI_Model {
     }
 
 //change userpass
-public function userpass($id, $old_password, $new_password)
+public function userpass($user_id, $old_password, $new_password)
 {  
     //  echo $user. $old_password. $new_password; die;
 
-    $this->db->where('id', $id);
+    $this->db->where('id', $user_id);
     $this->db->where('password', $old_password); 
     $query = $this->db->get('form'); 
 
@@ -78,7 +78,7 @@ public function userpass($id, $old_password, $new_password)
             'password' => $new_password 
         ];
 
-        $this->db->where('id', $id);
+        $this->db->where('id', $user_id);
         return $this->db->update('form', $update);
     } else {
         return false;
@@ -99,6 +99,20 @@ public function userpass($id, $old_password, $new_password)
          return $this->db->count_all_results('bloglist');  
     }
 
+   // for bloglistcategorias
+
+   public function getusersc($limit, $start) {
+    // $this->db->where('recycle', 1);
+    $this->db->limit($limit, $start);  
+    $query = $this->db->get('bloglist');    
+    return $query->result_array();           
+}
+public function getCountBlogc(){
+
+    // $this->db->where('recycle',1);
+     return $this->db->count_all_results('bloglist');  
+} 
+
  //for editblog
     public function editblog($user) {
         $this->db->where('id', $user);
@@ -109,7 +123,11 @@ public function userpass($id, $old_password, $new_password)
     public function updateblog($user, $data) {
         $updateblog=[
             'name' => $data['name'],    
-            'title'=> $data['title'],  
+            'title'=> $data['title'],
+            'SEO_Title'=> $data['SEO_Title'],  
+            'MetaDescription'=> $data['MetaDescription'],  
+            'MetaKeyword'=> $data['MetaKeyword'],  
+            'SEO_Robat'=> $data['SEO_Robat'], 
             'description'=> $data['description'],     
             'createdate'=> $data['createdate'],       
             'updatedate'=> $data['updatedate'] ,
@@ -124,7 +142,9 @@ public function userpass($id, $old_password, $new_password)
          public function countrows()
          {
              $this->db->where('recycle', 0);
-             return $this->db->count_all_results('bloglist');
+             $check= $this->db->count_all_results('bloglist');
+            //  echo"$check";
+             return $check;
          }
 //get blog recycle data
 public function getblogrecycledata($limit, $start)
@@ -144,8 +164,6 @@ public function addblog($data) {
     } else {
         $data['image'] = NULL;
     }
-    
-
     $this->db->insert('bloglist', $data);
 
     return true;

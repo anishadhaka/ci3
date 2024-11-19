@@ -15,7 +15,7 @@
   <li><a href="<?php echo base_url('UserController/blogcategoriasite'); ?>">Blog categorias</a></li>
   <li><a href="<?php echo base_url('UserController/newscategoriasite'); ?>">News Section</a></li>
         <li><a href="<?php echo base_url('about'); ?>">SEO</a></li>
-        <li><a href="<?php echo base_url('contactus'); ?>">Contact Maeketing</a></li>
+        <li><a href="<?php echo base_url('contactus'); ?>">Contact Marketing</a></li>
         <li><a href="<?php echo base_url('contactus'); ?>">Inbound Maeketing</a></li>
 
       </ul>

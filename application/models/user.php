@@ -50,12 +50,14 @@ class User extends CI_Model {
         $data = array(
             'name' => $data['name'] ,
             'title' => $data['title'] ,
+            'SEO_Title'=> $data['SEO_Title'],
+            'MetaDescription'=> $data['MetaDescription'],
+            'MetaKeyword'=> $data['MetaKeyword'],
+            'SEO_Robat'=> $data['SEO_Robat'],
             'description' => $data['description'],
             'createdate' => $data['createdate'],
             'updatedate' => $data['updatedate'],
-            'image'=> $data['image']
-           
-            
+            'image'=> $data['image']  
          );
          
          $this->db->insert('bloglist', $data);

@@ -24,6 +24,7 @@ class UserController extends CI_Controller {
         $this->load->library('form_validation');
 		$this->load->model('userlist');	
 		$this->load->model('pageslist');
+		$this->load->library('pagination');
 		$this->load->library('upload');
 		$this->load->database();
 		$this->load->library('upload');
@@ -44,8 +45,8 @@ private function check_login()
 //for logout
 public function logout()
 {
-	$this->session->sess_destroy();  // Destroy the session
-	redirect('login');  // Redirect to login page
+	$this->session->sess_destroy(); 
+	redirect('login');  
 }
 
 //for registerpage
@@ -118,10 +119,16 @@ public function loginvalidation() {
 	   public function welcome() {
 		if ($this->session->userdata('id')) {
 			$data['username'] = $this->session->userdata('name');
+			$this->load->model('login');
+			$data['user']=$this->login->user();
+			$data['Blogs']=$this->login->Blogs();
+			$data['News']=$this->login->News();
+			$data['pages']=$this->login->pages();
+
 			$this->load->view('user/header');
 			$this->load->view('user/sidebar');
 			$this->load->view('user/topbar');
-			$this->load->view('user/dashboardcontent');
+			$this->load->view('user/dashboardcontent',$data);
 			$this->load->view('user/footer');
 			// $this->load->view('user/dashboard', $data);
 		} else {
@@ -267,7 +274,7 @@ public function profile(){
 //login password change page
 public function password_page()
 {
-	$data['id'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+	$data['user_id'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
 	$this->load->view('user/header');
 	$this->load->view('user/sidebar');
 	$this->load->view('user/topbar');
@@ -303,20 +310,21 @@ public function userpass()
         
         $old_password = $data['old_password'];
         $new_password = $data['new_password'];
-		$id = $data['user_id'];
+		$user_id = $data['user_id'];
 
         $this->load->model('userlist');
-        $result = $this->userlist->userpass( $id,$old_password, $new_password);
+        $result = $this->userlist->userpass( $user_id,$old_password, $new_password);
 
         if ($result) {
             redirect('UserController/view', 'refresh');
         } else {
             $this->session->set_flashdata('error', 'Invalid Old Password');
-			redirect('UserController/userpass', $result);
+			$this->session->set_flashdata('user_id', $user_id); 
+			redirect('UserController/userpass');
 			// $this->load->view('user/header');
 			// $this->load->view('user/sidebar');
 			// $this->load->view('user/topbar');
-			// $this->load->view('user/changeuserpass',$result);
+			// $this->load->view('user/changeuserpass',$id);
 			// $this->load->view('user/footer');
         }
     }
@@ -345,6 +353,27 @@ public function blog()
 		  $this->load->view('user/bloglist',['data'=>$data]);
 		  $this->load->view('user/footer');
 }   
+public function bloglistcategorias()
+{        
+	$config = array();
+	$config['base_url'] = base_url('UserController/bloglistcategorias');  
+	$config['total_rows'] = $this->userlist->getCountBlogc();    
+	$config['per_page'] = 3;                                 
+	$config['uri_segment'] = 3;                              
+
+	
+	$this->pagination->initialize($config);
+	$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	$data['users'] = $this->userlist->getusersc($config['per_page'], $page);
+	$data['links'] = $this->pagination->create_links();
+	// Load the view
+		  $this->load->model('userlist');
+		  $this->load->view('user/header');
+		  $this->load->view('user/sidebar');
+		  $this->load->view('user/topbar');
+		  $this->load->view('user/bloglistcategorias',['data'=>$data]);
+		  $this->load->view('user/footer');
+} 
 
 
 
@@ -367,6 +396,10 @@ public function editblog($user) {
 
 	$this->form_validation->set_rules('name', 'name', 'required');
 	$this->form_validation->set_rules('email', 'title', 'required');
+	$this->form_validation->set_rules('SEO_Title', 'SEO_Title', 'required');
+    $this->form_validation->set_rules('MetaDescription', 'MetaDescription', 'required');
+    $this->form_validation->set_rules('MetaKeyword', 'MetaKeyword', 'required');
+    $this->form_validation->set_rules('SEO_Robat', 'SEO_Robat', 'required');
 	$this->form_validation->set_rules('password', 'description', 'required');
 	$this->form_validation->set_rules('number', 'createdate', 'required');
 	$this->form_validation->set_rules('city', 'updatedate', 'required');
@@ -374,6 +407,10 @@ public function editblog($user) {
 	
 	 $data['name'] = $this->input->post('name');
 	 $data['title'] = $this->input->post('title');
+	 $data['SEO_Title'] = $this->input->post('SEO_Title');
+	 $data['MetaDescription'] = $this->input->post('MetaDescription');
+	 $data['MetaKeyword'] = $this->input->post('MetaKeyword');
+	 $data['SEO_Robat'] = $this->input->post('SEO_Robat');
 	 $data['description'] = $this->input->post('description');
 	 $data['createdate'] = $this->input->post('createdate');
 	 $data['updatedate'] = $this->input->post('updatedate');
@@ -408,6 +445,10 @@ public function editblog($user) {
    public function addblogdata() {
     $data['name'] = $this->input->post('name');
     $data['title'] = $this->input->post('title');
+	$data['SEO_Title'] = $this->input->post('SEO_Title');
+	$data['MetaDescription'] = $this->input->post('MetaDescription');
+	$data['MetaKeyword'] = $this->input->post('MetaKeyword');
+	$data['SEO_Robat'] = $this->input->post('SEO_Robat');
     $data['description'] = $this->input->post('description');
     $data['createdate'] = $this->input->post('createdate');
     $data['updatedate'] = $this->input->post('updatedate');
@@ -415,10 +456,14 @@ public function editblog($user) {
 
     // Form validation
     $this->form_validation->set_rules('name', 'Name', 'required');
-    $this->form_validation->set_rules('title', 'Title', 'required');
-    $this->form_validation->set_rules('description', 'Description', 'required');
-    $this->form_validation->set_rules('createdate', 'Create Date', 'required');
-    $this->form_validation->set_rules('updatedate', 'Update Date', 'required');
+    // $this->form_validation->set_rules('title', 'Title', 'required');
+    // $this->form_validation->set_rules('SEO_Title', 'SEO_Title', 'required');
+    // $this->form_validation->set_rules('MetaDescription', 'MetaDescription', 'required');
+    // $this->form_validation->set_rules('MetaKeyword', 'MetaKeyword', 'required');
+    // $this->form_validation->set_rules('SEO_Robat', 'SEO_Robat', 'required');
+    // $this->form_validation->set_rules('description', 'Description', 'required');
+    // $this->form_validation->set_rules('createdate', 'Create Date', 'required');
+    // $this->form_validation->set_rules('updatedate', 'Update Date', 'required');
 
     if ($this->form_validation->run() == FALSE) {
         $this->load->view('user/header');
@@ -464,13 +509,13 @@ public function editblog($user) {
 }
 
 //for recycle page
-public function recycle(){
-	$this->load->view('user/header');
-	$this->load->view('user/sidebar');
-	$this->load->view('user/topbar');
-	$this->load->view('user/recycle',['data' => $data]);
-	$this->load->view('user/footer');
-  }
+// public function recycle(){
+// 	$this->load->view('user/header');
+// 	$this->load->view('user/sidebar');
+// 	$this->load->view('user/topbar');
+// 	$this->load->view('user/recycle',['data' => $data]);
+// 	$this->load->view('user/footer');
+//   }
 
 
 
@@ -478,25 +523,32 @@ public function recycle(){
   
 //recycleblog pagination
 public function recycleblog()
-{        
-	$config = array();
-	$config['base_url'] = base_url('UserController/recycleblog');  
-	$config['total_rows'] = $this->userlist->countrows();    
-	$config['per_page'] = 5;                                 
-	$config['uri_segment'] = 3;                              
+{
+    $this->load->model('userlist');
+    $this->load->library('pagination');
 
-	
-	$this->pagination->initialize($config);
-	$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-	$data = $this->userlist->getblogrecycledata($config['per_page'], $page);
-	$data['links'] = $this->pagination->create_links();
+    $config = array();
+    $config['base_url'] = base_url('UserController/recycleblog');  
+    $config['total_rows'] = $this->userlist->countrows();  
+    $config['per_page'] = 5;                                 
+    $config['uri_segment'] = 3;  
+  
+    $this->pagination->initialize($config);
 
-		  $this->load->model('userlist');
-		  $this->load->view('user/header');
-		  $this->load->view('user/sidebar');
-		  $this->load->view('user/topbar');
-		  $this->load->view('user/recycle',['data' => $data]);
-		  $this->load->view('user/footer');
+    $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+    // echo "Current page: " . $page;
+
+ 
+    $data['user'] = $this->userlist->getblogrecycledata($config['per_page'], $page);
+    $data['links'] = $this->pagination->create_links();
+	// print_r($data['links']);
+	// die;
+
+    $this->load->view('user/header');
+    $this->load->view('user/sidebar');
+    $this->load->view('user/topbar');
+    $this->load->view('user/recycle', ['data' => $data]);
+    $this->load->view('user/footer');
 } 
 	
 // restore blog

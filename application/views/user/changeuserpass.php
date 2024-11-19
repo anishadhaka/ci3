@@ -11,12 +11,14 @@
             <?php if ($this->session->flashdata('error')): ?>
                 <p style="color: red;"><?php echo $this->session->flashdata('error'); ?></p>
             <?php endif; ?>
-            
+            <?php 
+        $user_id = isset($user_id) ? $user_id : $this->session->flashdata('user_id');
+        ?>
             <?php echo form_open('userpass'); ?>
             
                 <label for="old_password">Old Password:</label><br>
                 <input type="password" name="old_password" ><br><br>
-                <input type="hidden" name="user_id" value="<?php echo $id; ?>" />
+                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" readonly/>
             
                 <label for="new_password">New Password:</label><br>
                 <input type="password" name="new_password" ><br><br>
