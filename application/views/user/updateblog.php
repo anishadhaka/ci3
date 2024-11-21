@@ -2,12 +2,20 @@
               <div id="form">
               <form name="simple" method="POST" action="<?php echo base_url('UserController/updateblog') ?>">
                        <div id="heading"> Update Blog Data </div>
-
-
+   <!-- <?php echo '<pre>'; print_r($categories); echo '</pre>'; ?> -->
+                
                        <div class="col-md-12">
-                         <label class="mb-3 mr-1" for="Title">Title: </label>
-                          <input class="form-control" type="text" name="Title" placeholder=""value="<?php echo $user['Title'] ?>"/>      
-                       </div>
+                                <label class="mb-3 mr-1">Title</label>
+                                <select class="form-control" id="Title" name="Title" required>
+                         <?php if (!empty($categories)): ?>
+                         <?php foreach ($categories as $categorys): ?>
+                             <option value="<?php echo $categorys['Title']; ?>"><?php echo $categorys['Title']; ?></option>
+                         <?php endforeach; ?>
+                         <?php else: ?>
+                         <option value="">No Categories Available</option>
+                         <?php endif; ?>
+                        </select>
+                        </div>
 
 
                        <div class="col-md-12">

@@ -7,7 +7,7 @@
                        <div class="col-md-12">
                        <label  class="mb-3 mr-1"for="Title">Title: </label>
                        <input class="form-control"  type="text" name="Title" placeholder="" value="<?php echo $user['Title'] ?>"/> 
-                       <input class="form-control" type="hidden" name="id" placeholder=""value="<?php echo $user['id'] ?>"/> 
+                       <input class="form-control" type="hidden" name="category_id" placeholder=""value="<?php echo $user['category_id'] ?>"/> 
     
                     </div>
                     

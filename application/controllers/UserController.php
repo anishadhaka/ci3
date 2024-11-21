@@ -383,6 +383,8 @@ public function bloglistcategorias()
 public function editblog($user) {
 	$this->load->model('userlist');
 	$data['user'] = $this->userlist->editblog($user);
+	$data['categories'] = $this->userlist->categoryc(); 
+	// print_r($data['categories']); die;
 	$this->load->model('userlist');
 	$this->load->view('user/header');
 	$this->load->view('user/sidebar');
@@ -424,6 +426,7 @@ public function editblog($user) {
 		$this->load->view('user/updateblog',$data);
 	} else {
 		 $this->load->model('userlist');
+		 $data['categories'] = $this->userlist->categoryc(); 
 		$this->userlist->updateblog($user, $data);
 		// echo "hello";
 		// die;
@@ -547,6 +550,7 @@ public function addcategories() {
 
  // delete deleteblogcat 
  public function deleteblogcat($user){
+	// echo"$user";die;
 		
 	$this->load->model('userlist');
 	$this->userlist->deleteblogcat($user);
@@ -579,8 +583,8 @@ public function cateditdata($user) {
 	$data['MetaDescription'] = $this->input->post('MetaDescription');
 	$data['MetaKeyword'] = $this->input->post('MetaKeyword');
 	$data['SEO_Robat'] = $this->input->post('SEO_Robat');
-	 $data['id'] = $this->input->post('id');
-	 $user=$data['id'];
+	 $data['category_id'] = $this->input->post('category_id');
+	 $user=$data['category_id'];
 	//  print_r($data);die;
 	 if ($this->form_validation->run() == FALSE) {
 		
@@ -659,23 +663,50 @@ public function blogdelete($user){
     redirect('UserController/recycleblog', 'refresh');
    }
 
+// print catogory data
+public function catbeauty($categoryTitle = NULL) {
+    $this->load->model('userlist');
+    $this->check_login();
 
+    $data['categories'] = $this->userlist->categoryc();
+
+ 
+    if ($categoryTitle) {
+        $data['user'] = $this->userlist->get_posts_by_category_name(urldecode($categoryTitle));  
+        $data['categoryTitle'] = urldecode($categoryTitle);  
+    } else {
+        $data['user'] = $this->userlist->blogsite();  
+        $data['news'] = $this->userlist->blognews();
+    }
+
+    $this->load->view('user/blogsiteheader', $data);
+    $this->load->view('user/blogheader2');
+    $this->load->view('user/category_data', $data);  
+    $this->load->view('user/blogsitefooter');
+}
 
 //for blogsite
 
-public function blogsite() {
+public function blogsite($categoryTitle = NULL) {
     $this->load->model('userlist');
-	$this->check_login();
-	// $this->load->model('userlist');
-	
-	$data= $this->userlist->category();
-	// echo "dbwb";
-	// print_r($data);die;
-    
-    $data['user'] = $this->userlist->blogsite(); 
-    $data['news'] = $this->userlist->blognews();  
+    $this->check_login();
 
-	$this->load->view('user/blogsiteheader',$data);
+    $data['categories'] = $this->userlist->categoryc();
+    if ($categoryTitle ) {
+        $data['user'] = $this->userlist->get_posts_by_category_name(urldecode($categoryTitle));  
+        $data['categoryTitle'] = urldecode($categoryTitle);  
+    //  print_r($data);die;
+	//    redirect('UserController/catbeauty');
+    } else {
+        $data['user'] = $this->userlist->blogsite();
+        $data['news'] = $this->userlist->blognews();
+        // $data['categoryTitle'] = "beauty"; ~
+    //  print_r($data);
+
+    }
+    //  print_r($data);
+	
+    $this->load->view('user/blogsiteheader', $data);
     $this->load->view('user/blogheader2');
     $this->load->view('user/blogsite', $data);  
     $this->load->view('user/blogsitefooter');
@@ -684,20 +715,22 @@ public function blogsite() {
 
 public function blogsiteabout(){
 	$this->load->model('userlist');
+	$data['categories'] = $this->userlist->categoryc(); 
 	$data['user']= $this->userlist->about();
-	$this->load->view('user/blogsiteheader');
+	$this->load->view('user/blogsiteheader',$data);
 	$this->load->view('user/about', $data);
 	$this->load->view('user/blogsitefooter');
-
-
     }
 // blogsite contactus 
-public function contactus($data=array())
-{   $this->load->view('user/blogsiteheader');
+public function contactus($data=array()){  
+	$this->load->model('userlist');
+	$data['categories'] = $this->userlist->categoryc(); 
+	
+	$this->load->view('user/blogsiteheader',$data);
 	$this->load->view('user/contactus');
 	$this->load->view('user/blogsitefooter');
 
-}
+  }
 
 // blogsite categorias 
 
@@ -712,16 +745,18 @@ public function blogsitecategories(){
 
     }
 
-// Read More
+//  blogsite Read More
     public function read_more($post_id) {
         $data['post'] = $this->userlist->get_post_by_id($post_id); 
         if (empty($data['post'])) {
             show_404(); 
         }
 		$data['sideblog'] = $this->userlist->sideblog();
-		$this->load->view('user/blogsiteheader');
+		$this->load->model('userlist');
+	    $data['categories'] = $this->userlist->categoryc(); 
+	    $this->load->view('user/blogsiteheader',$data);
         $this->load->view('user/readmore', $data); 
-	$this->load->view('user/blogsitefooter');
+	    $this->load->view('user/blogsitefooter');
 
     }
 
@@ -788,7 +823,9 @@ public function contactusdata (){
 		show_404(); 
 	}
 	$data['sideblog'] = $this->userlist->sidenews();
-	$this->load->view('user/blogsiteheader');
+	$this->load->model('userlist');
+    $data['categories'] = $this->userlist->categoryc(); 
+    $this->load->view('user/blogsiteheader',$data);
 	$this->load->view('user/newsreadmore', $data); 
 $this->load->view('user/blogsitefooter');
 

@@ -8,7 +8,7 @@
 
                <thead>
                  <tr>
-                 <th>ID</td>
+                 <th>Category_id</td>
                    <th>Title</td>
                    <th>Meta Description</th>
                    <th>Meta Keyword</th>
@@ -21,15 +21,15 @@
                <tbody>   
                 <?php foreach ($data['users'] as $user) { ?>  
                     <tr>
-                    <td> <?php echo $user['id'] ?></td>
+                    <td> <?php echo $user['category_id'] ?></td>
                        <td> <?php echo $user['Title'] ?></td>
                        <td> <?php echo $user['MetaDescription'] ?></td>
                        <td> <?php echo $user['MetaKeyword'] ?></td>
                        <td> <?php echo $user['SEO_Robat'] ?></td>
                        <td>
-                          <form method="POST" action="<?php echo base_url('UserController/deleteblogcat/'.$user['id'] );?>">
+                          <form method="POST" action="<?php echo base_url('UserController/deleteblogcat/'.$user['category_id'] );?>">
                           <button type="submit" class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Delete</button>
-                          <button type="submit" class="btn "><a href="<?php echo base_url('UserController/cateditdata/'.$user['id'] );?>"><i class="fa-solid fa-pen-to-square"></i>Update</a></button>
+                          <button type="submit" class="btn "><a href="<?php echo base_url('UserController/cateditdata/'.$user['category_id'] );?>"><i class="fa-solid fa-pen-to-square"></i>Update</a></button>
                           </form>
                        </td>
                     </tr>

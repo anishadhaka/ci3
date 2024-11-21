@@ -1,7 +1,3 @@
-
-
-
-
 <section class="featured-reviews">
     <h1 style="color:#3498db; font-size:30px; font-weight:bold; margin:30px;">Blogs</h1>
     <div class="review-grid">
@@ -30,20 +26,29 @@
         <?php endforeach; ?>
     </div>
     <!-- <button id="loadMore2" class="load-more-btn">Load More</button> -->
-    </section>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    $(document).ready(function() {
-    $(".review-card2").slice(3).hide();
-    
-    $("#loadMore2").on("click", function(e) {
-      e.preventDefault();
-      
-      $(".review-card2:hidden").slice(0, 3).slideDown();
-      
-      if ($(".review-card2:hidden").length == 0) {
-        $("#loadMore2").hide();
-      }
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Blog "Load More" functionality
+    $(".review-card").slice(3).hide(); // Hide all cards after 3
+    $("#loadMore").on("click", function(e) {
+        e.preventDefault();
+        $(".review-card:hidden").slice(0, 3).slideDown();
+        if ($(".review-card:hidden").length == 0) {
+            $("#loadMore").hide(); // Hide the "Load More" button when no more items
+        }
     });
-  });
-  </script>
+
+    // News "Load More" functionality
+    $(".review-card2").slice(3).hide(); // Hide all news cards after 3
+    $("#loadMore2").on("click", function(e) {
+        e.preventDefault();
+        $(".review-card2:hidden").slice(0, 3).slideDown();
+        if ($(".review-card2:hidden").length == 0) {
+            $("#loadMore2").hide(); // Hide the "Load More" button when no more items
+        }
+    });
+});
+</script>

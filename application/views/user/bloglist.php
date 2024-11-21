@@ -20,6 +20,7 @@
                    <th>Description</th>
                    <th>Create Date</th>
                    <th>Update Date</th>
+                   <th>Category_id</th>
                    <th>image</th>
                    <th>Action</th>
                  </tr>
@@ -31,7 +32,8 @@
                        <td> <?php echo $user['Title'] ?></td>
                        <td> <?php echo $user['description'] ?></td>
                        <td> <?php echo $user['createdate'] ?></td>
-                       <td> <?php echo $user['updatedate'] ?></td>  
+                       <td> <?php echo $user['updatedate'] ?></td>
+                       <td><?php echo $user['category_id']; ?></td>  
            
                 <td>
                 <?php if (!empty($user['image'])): ?>

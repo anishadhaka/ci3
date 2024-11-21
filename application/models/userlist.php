@@ -91,6 +91,10 @@ public function userpass($user_id, $old_password, $new_password)
         $this->db->where('recycle',1);
          return $this->db->count_all_results('bloglist');  
     }
+    
+    
+
+    
 
    // for bloglistcategorias
 
@@ -108,12 +112,12 @@ public function getCountBlogc(){
 // for deleteblogcat
 public function deleteblogcat($id)
 {
-   return $this->db->delete('blogcateg', array('id' => $id));
+   return $this->db->delete('blogcateg', array('category_id' => $id));
 }
 
 //for cateditdata
 public function cateditdata($user) {
-    $this->db->where('id', $user);
+    $this->db->where('category_id', $user);
     $query = $this->db->get('blogcateg'); 
     return $query->row_array(); 
 }
@@ -126,7 +130,7 @@ public function catupdatedata($user, $data) {
         'SEO_Robat'=> $data['SEO_Robat']
       
     ];
-    $this->db->where('id', $user);
+    $this->db->where('category_id', $user);
     return $this->db->update('blogcateg', $updatedata); 
 }
 
@@ -223,6 +227,27 @@ public function blognews() {
     $query = $this->db->get("news");
     return $query->result_array();  
 }
+public function categoryc() {
+    $this->db->select('category_id, Title');
+    $query = $this->db->get('blogcateg');  
+    return $query->result_array();  
+  }
+  public function get_posts_by_category($categoryId) {
+    $this->db->where('category_id', $categoryId);  
+    $query = $this->db->get('bloglist');
+    return $query->result_array();  
+}
+//
+
+public function get_posts_by_category_name($categoryName) {
+    $this->db->select('bloglist.*');  
+    $this->db->from('bloglist');
+    $this->db->join('blogcateg', 'bloglist.Title = blogcateg.Title'); 
+    $this->db->where('blogcateg.Title', $categoryName);  
+    $query = $this->db->get();
+
+    return $query->result_array();  
+}
 
 // blogsite about
 public function about(){
@@ -286,8 +311,9 @@ public function sidenews(){
    }
 // category dropdown 
 public function category() {
-    $query = $this->db->get('blogcateg');  // Perform the query
-    return $query->result_array();  // Return the result as an array
+    $this->db->select('category_id, Title');
+    $query = $this->db->get('blogcateg');  
+    return $query->result_array();  
   }
 }
 ?>

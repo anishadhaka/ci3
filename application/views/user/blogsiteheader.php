@@ -20,26 +20,31 @@
       <h1><i class="fa-solid fa-sailboat"> </i><b>DW</b>Digita Web</h1>
     </div>
     <nav>
-      <?php
-        print_r($data);
-      
-      ?>
+    <!-- <?php echo '<pre>'; print_r($categories); echo '</pre>'; ?> -->
         <ul>
             <li><a href="<?php echo base_url('blogsite'); ?>"><i class="fa-solid fa-house"></i> Home</a></li>
             <li class="dropdown">
             <a href="#" class="dropbtn"> Categorías <i class="fa-solid fa-caret-down"></i></a>
             <ul class="dropdown-content">
-            <?php if (!empty($categories)): ?>
-            <?php foreach ($categories as $category): ?>
-                <li><a href="<?php echo base_url('UserController/blogsite/' . $category['id']); ?>"><?php echo htmlspecialchars($category['Title']); ?></a></li>
-            <?php endforeach; ?>
-           <?php else: ?>
-            <li>No categories available</li>
-          <?php endif; ?>
-         </ul>
+              <?php if (!empty($categories)): ?>
+              <?php foreach ($categories as $category): ?>
+            <li>
+                <a href="<?php echo base_url('UserController/blogsite/' . $category['Title'] . '/'. $category['category_id']); ?>" 
+                class="category-link" ><?php echo htmlspecialchars($category['Title']); ?></a>
+            </li>
+              <?php endforeach; ?>
+              <?php else: ?>
+              <li>No categories available</li>
+              <?php endif; ?>
+           </ul>
         </li>
             <li><a href="<?php echo base_url('UserController/blogsiteabout'); ?>">About</a></li>
             <li><a href="<?php echo base_url('contactus'); ?>">Contact Us</a></li>
         </ul>
     </nav>
 </header>
+
+
+
+
+

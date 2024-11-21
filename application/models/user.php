@@ -57,6 +57,7 @@ class User extends CI_Model {
             'createdate' => $data['createdate'],
             'updatedate' => $data['updatedate'],
             'image'=> $data['image']  
+            
          );
          
          $this->db->insert('bloglist', $data);
