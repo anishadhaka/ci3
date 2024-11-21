@@ -8,7 +8,6 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Create Date</th>
@@ -21,8 +20,7 @@
                             <?php foreach ($data['user'] as $user) {?>
                                 <tr>
                                     <td><?php echo $user['id']; ?></td>
-                                    <td><?php echo $user['name']; ?></td>
-                                    <td><?php echo $user['title']; ?></td>
+                                    <td><?php echo $user['Title']; ?></td>
                                     <td><?php echo $user['description']; ?></td>
                                     <td><?php echo $user['createdate']; ?></td>
                                     <td><?php echo $user['updatedate']; ?></td>

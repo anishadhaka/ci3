@@ -61,6 +61,7 @@ $route['about']= 'UserController/blogsiteabout';
 $route['contactus']= 'UserController/contactus';
 $route['categorias']= 'UserController/blogsitecategories';
 $route['pageslist']= 'UserController/pageslist';
+$route['category/(:num)'] = 'UserController/category/$1';
 
 
 

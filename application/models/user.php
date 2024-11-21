@@ -48,12 +48,11 @@ class User extends CI_Model {
         // print_r($data);
         // die;
         $data = array(
-            'name' => $data['name'] ,
-            'title' => $data['title'] ,
-            'SEO_Title'=> $data['SEO_Title'],
-            'MetaDescription'=> $data['MetaDescription'],
-            'MetaKeyword'=> $data['MetaKeyword'],
-            'SEO_Robat'=> $data['SEO_Robat'],
+            'Title' => $data['Title'] ,
+            // 'Title'=> $data['Title'],
+            // 'MetaDescription'=> $data['MetaDescription'],
+            // 'MetaKeyword'=> $data['MetaKeyword'],
+            // 'SEO_Robat'=> $data['SEO_Robat'],
             'description' => $data['description'],
             'createdate' => $data['createdate'],
             'updatedate' => $data['updatedate'],
@@ -66,7 +65,26 @@ class User extends CI_Model {
      
     }
 
- 
+      //add addcategories 
+      public function addcategories($data) {
+       
+        // print_r($data);
+        // die;
+        $data = array(
+
+            'Title'=> $data['Title'],
+            'MetaDescription'=> $data['MetaDescription'],
+            'MetaKeyword'=> $data['MetaKeyword'],
+            'SEO_Robat'=> $data['SEO_Robat']
+
+         );
+         
+         $this->db->insert('blogcateg', $data);
+         return true ;
+
+     
+    }
+
 
 
 }

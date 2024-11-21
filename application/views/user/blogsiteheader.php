@@ -12,38 +12,34 @@
   <link rel="stylesheet" href="<?php echo base_url('public/css/about.css'); ?>">
   <link rel="stylesheet" href="<?php echo base_url('public/css/categorias.css'); ?>">
 
-  <!-- <script src="scripts.js" defer></script> -->
 </head>
 <body>
 
-
-  <header>
+<header>
     <div class="logo">
       <h1><i class="fa-solid fa-sailboat"> </i><b>DW</b>Digita Web</h1>
     </div>
     <nav>
-    <ul>
-        <li><a href="<?php echo base_url('blogsite'); ?>"><i class="fa-solid fa-house"></i> Home</a></li>
-        <li><a href="<?php echo base_url('UserController/blogsitecategories'); ?>">Categorías</a></li>
-        <li><a href="<?php echo base_url('UserController/blogsiteabout'); ?>">About</a></li>
-        <li><a href="<?php echo base_url('contactus'); ?>">Contact Us</a></li>
-      </ul>
-     
-       
-      <!-- <div class="language-switcher">
-   
-        <select id="languageSelect" onchange="changeLanguage()">
-          <option value="es">Español</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="pt">Português</option>
-          <option value="it">Italiano</option>
-          <option value="de">Deutsch</option>
-          <option value="tr">Türkçe</option>
-          <option value="ru">Русский</option>
-          <option value="zh">中文</option>
-          <option value="ko">한국어</option>
-        </select>
-      </div> -->
+      <?php
+        print_r($data);
+      
+      ?>
+        <ul>
+            <li><a href="<?php echo base_url('blogsite'); ?>"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li class="dropdown">
+            <a href="#" class="dropbtn"> Categorías <i class="fa-solid fa-caret-down"></i></a>
+            <ul class="dropdown-content">
+            <?php if (!empty($categories)): ?>
+            <?php foreach ($categories as $category): ?>
+                <li><a href="<?php echo base_url('UserController/blogsite/' . $category['id']); ?>"><?php echo htmlspecialchars($category['Title']); ?></a></li>
+            <?php endforeach; ?>
+           <?php else: ?>
+            <li>No categories available</li>
+          <?php endif; ?>
+         </ul>
+        </li>
+            <li><a href="<?php echo base_url('UserController/blogsiteabout'); ?>">About</a></li>
+            <li><a href="<?php echo base_url('contactus'); ?>">Contact Us</a></li>
+        </ul>
     </nav>
-  </header>
+</header>

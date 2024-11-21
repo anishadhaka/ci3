@@ -353,12 +353,13 @@ public function blog()
 		  $this->load->view('user/bloglist',['data'=>$data]);
 		  $this->load->view('user/footer');
 }   
+//
 public function bloglistcategorias()
 {        
 	$config = array();
 	$config['base_url'] = base_url('UserController/bloglistcategorias');  
 	$config['total_rows'] = $this->userlist->getCountBlogc();    
-	$config['per_page'] = 3;                                 
+	$config['per_page'] = 5;                                 
 	$config['uri_segment'] = 3;                              
 
 	
@@ -394,23 +395,23 @@ public function editblog($user) {
 	public function updateblog() {
 	//    $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
 
-	$this->form_validation->set_rules('name', 'name', 'required');
-	$this->form_validation->set_rules('email', 'title', 'required');
-	$this->form_validation->set_rules('SEO_Title', 'SEO_Title', 'required');
-    $this->form_validation->set_rules('MetaDescription', 'MetaDescription', 'required');
-    $this->form_validation->set_rules('MetaKeyword', 'MetaKeyword', 'required');
-    $this->form_validation->set_rules('SEO_Robat', 'SEO_Robat', 'required');
+	
+	$this->form_validation->set_rules('Title', 'Title', 'required');
+	// $this->form_validation->set_rules('SEO_Title', 'SEO_Title', 'required');
+    // $this->form_validation->set_rules('MetaDescription', 'MetaDescription', 'required');
+    // $this->form_validation->set_rules('MetaKeyword', 'MetaKeyword', 'required');
+    // $this->form_validation->set_rules('SEO_Robat', 'SEO_Robat', 'required');
 	$this->form_validation->set_rules('password', 'description', 'required');
 	$this->form_validation->set_rules('number', 'createdate', 'required');
 	$this->form_validation->set_rules('city', 'updatedate', 'required');
 	
 	
-	 $data['name'] = $this->input->post('name');
-	 $data['title'] = $this->input->post('title');
-	 $data['SEO_Title'] = $this->input->post('SEO_Title');
-	 $data['MetaDescription'] = $this->input->post('MetaDescription');
-	 $data['MetaKeyword'] = $this->input->post('MetaKeyword');
-	 $data['SEO_Robat'] = $this->input->post('SEO_Robat');
+	
+	 $data['Title'] = $this->input->post('Title');
+	//  $data['SEO_Title'] = $this->input->post('SEO_Title');
+	//  $data['MetaDescription'] = $this->input->post('MetaDescription');
+	//  $data['MetaKeyword'] = $this->input->post('MetaKeyword');
+	//  $data['SEO_Robat'] = $this->input->post('SEO_Robat');
 	 $data['description'] = $this->input->post('description');
 	 $data['createdate'] = $this->input->post('createdate');
 	 $data['updatedate'] = $this->input->post('updatedate');
@@ -435,28 +436,26 @@ public function editblog($user) {
 // add blog
 	     
    public function addblog($data=array())
-   {    $this->load->view('user/header');
+   {  
+	$this->load->model('userlist');
+	
+	$data['category'] = $this->userlist->category();
+	  $this->load->view('user/header');
 	    $this->load->view('user/sidebar');
 	    $this->load->view('user/topbar');
-	    $this->load->view('user/addblog');
+	    $this->load->view('user/addblog',$data);
 	    $this->load->view('user/footer');
    }
 
    public function addblogdata() {
-    $data['name'] = $this->input->post('name');
-    $data['title'] = $this->input->post('title');
-	$data['SEO_Title'] = $this->input->post('SEO_Title');
-	$data['MetaDescription'] = $this->input->post('MetaDescription');
-	$data['MetaKeyword'] = $this->input->post('MetaKeyword');
-	$data['SEO_Robat'] = $this->input->post('SEO_Robat');
+    $data['Title'] = $this->input->post('Title');
     $data['description'] = $this->input->post('description');
     $data['createdate'] = $this->input->post('createdate');
     $data['updatedate'] = $this->input->post('updatedate');
 	$data['image']=$this->input->post('image');
 
     // Form validation
-    $this->form_validation->set_rules('name', 'Name', 'required');
-    // $this->form_validation->set_rules('title', 'Title', 'required');
+    $this->form_validation->set_rules('Title', 'Title', 'required');
     // $this->form_validation->set_rules('SEO_Title', 'SEO_Title', 'required');
     // $this->form_validation->set_rules('MetaDescription', 'MetaDescription', 'required');
     // $this->form_validation->set_rules('MetaKeyword', 'MetaKeyword', 'required');
@@ -499,6 +498,44 @@ public function editblog($user) {
         }
     }
 }
+// add blog categories
+
+public function addcategories() {
+
+	$data['Title'] = $this->input->post('Title');
+	$data['MetaDescription'] = $this->input->post('MetaDescription');
+	$data['MetaKeyword'] = $this->input->post('MetaKeyword');
+	$data['SEO_Robat'] = $this->input->post('SEO_Robat');
+
+
+    // Form validation
+
+    $this->form_validation->set_rules('Title', 'Title', 'required');
+    // $this->form_validation->set_rules('MetaDescription', 'MetaDescription', 'required');
+    // $this->form_validation->set_rules('MetaKeyword', 'MetaKeyword', 'required');
+    // $this->form_validation->set_rules('SEO_Robat', 'SEO_Robat', 'required');
+    // $this->form_validation->set_rules('description', 'Description', 'required');
+    // $this->form_validation->set_rules('createdate', 'Create Date', 'required');
+    // $this->form_validation->set_rules('updatedate', 'Update Date', 'required');
+
+    if ($this->form_validation->run() == FALSE) {
+		// echo"jkbkj";die;
+
+        $this->load->view('user/header');
+	    $this->load->view('user/sidebar');
+	    $this->load->view('user/topbar');
+	    $this->load->view('user/addcategorias');
+	    $this->load->view('user/footer');
+    } else {
+		// echo"jkbkj";die;
+        $this->load->model('user');
+        $check = $this->user->addcategories($data);
+        if ($check == true) {
+            redirect('userController/bloglistcategorias'); 
+        }
+        
+    }
+}
 
  // delete blog 
  public function deleteblog($user){
@@ -508,14 +545,61 @@ public function editblog($user) {
           redirect('UserController/blog', 'refresh'); 
 }
 
-//for recycle page
-// public function recycle(){
-// 	$this->load->view('user/header');
-// 	$this->load->view('user/sidebar');
-// 	$this->load->view('user/topbar');
-// 	$this->load->view('user/recycle',['data' => $data]);
-// 	$this->load->view('user/footer');
-//   }
+ // delete deleteblogcat 
+ public function deleteblogcat($user){
+		
+	$this->load->model('userlist');
+	$this->userlist->deleteblogcat($user);
+	redirect('UserController/bloglistcategorias', 'refresh'); 
+}
+
+// edit cateditdata 
+public function cateditdata($user) {
+	
+	$this->load->model('userlist');
+	// echo $user; die;
+	$data['user'] = $this->userlist->cateditdata($user);
+	$this->load->view('user/header');
+	$this->load->view('user/sidebar');
+	$this->load->view('user/topbar');
+	$this->load->view('user/updateblogcat', $data);
+	$this->load->view('user/footer');
+}
+	
+// for catupdatedata
+	public function catupdatedata() {
+	   $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
+
+    $this->form_validation->set_rules('Title', 'Title', 'required');
+    $this->form_validation->set_rules('MetaDescription', 'MetaDescription', 'required');
+    $this->form_validation->set_rules('MetaKeyword', 'MetaKeyword', 'required');
+    $this->form_validation->set_rules('SEO_Robat', 'SEO_Robat', 'required');
+	
+	$data['Title'] = $this->input->post('Title');
+	$data['MetaDescription'] = $this->input->post('MetaDescription');
+	$data['MetaKeyword'] = $this->input->post('MetaKeyword');
+	$data['SEO_Robat'] = $this->input->post('SEO_Robat');
+	 $data['id'] = $this->input->post('id');
+	 $user=$data['id'];
+	//  print_r($data);die;
+	 if ($this->form_validation->run() == FALSE) {
+		
+		$this->load->model('userlist');
+		$data['user'] = $this->userlist->catupdatedata($user);
+		$this->load->view('user/updatedateblog',$data);
+		echo "hello";
+		die;
+	} else {
+		 $this->load->model('userlist');
+		$this->userlist->catupdatedata($user, $data);
+		// echo "hello";
+		// die;
+		redirect('userController/bloglistcategorias');
+
+		
+	}
+
+}
 
 
 
@@ -581,11 +665,17 @@ public function blogdelete($user){
 
 public function blogsite() {
     $this->load->model('userlist');
+	$this->check_login();
+	// $this->load->model('userlist');
+	
+	$data= $this->userlist->category();
+	// echo "dbwb";
+	// print_r($data);die;
     
     $data['user'] = $this->userlist->blogsite(); 
     $data['news'] = $this->userlist->blognews();  
 
-	$this->load->view('user/blogsiteheader');
+	$this->load->view('user/blogsiteheader',$data);
     $this->load->view('user/blogheader2');
     $this->load->view('user/blogsite', $data);  
     $this->load->view('user/blogsitefooter');
@@ -740,7 +830,7 @@ public function addpages($data=array())
 }
 
 public function addpage (){
-$data['title'] = $this->input->post('title');
+$data['Title'] = $this->input->post('Title');
 $data['date'] = $this->input->post('date');
 $data['email'] = $this->input->post('email');
 $data['number'] = $this->input->post('number');
@@ -749,7 +839,7 @@ $data['description'] = $this->input->post('description');
 
 // print_r($data);
 // die;
-$this->form_validation->set_rules('title', 'title', 'required');
+$this->form_validation->set_rules('Title', 'Title', 'required');
 $this->form_validation->set_rules('date', 'date', 'required');
 $this->form_validation->set_rules('email', 'email', 'required');
 $this->form_validation->set_rules('number', 'number', 'required');
@@ -803,14 +893,14 @@ public function editpage($user) {
 		// $data['id'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
 		echo $data;
 		$this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
-		$this->form_validation->set_rules('title', 'title', 'required');
+		$this->form_validation->set_rules('Title', 'Title', 'required');
 		$this->form_validation->set_rules('date', 'date', 'required');
 		$this->form_validation->set_rules('email', 'email', 'required');
 		$this->form_validation->set_rules('number', 'number', 'required');
 		$this->form_validation->set_rules('gender', 'gender', 'required');
 		$this->form_validation->set_rules('description', 'description', 'required');
         
-	   $data['title'] = $this->input->post('title');
+	   $data['Title'] = $this->input->post('Title');
 	   $data['date'] = $this->input->post('date');
 	   $data['email'] = $this->input->post('email');
 	   $data['number'] = $this->input->post('number');
@@ -887,20 +977,16 @@ public function editnews($user) {
 	public function updatenews() {
 	//    $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
 
-	$this->form_validation->set_rules('name', 'name', 'required');
-	$this->form_validation->set_rules('email', 'title', 'required');
+	$this->form_validation->set_rules('Title', 'Title', 'required');
 	$this->form_validation->set_rules('password', 'description', 'required');
 
 	
-	
-	 $data['name'] = $this->input->post('name');
-	 $data['title'] = $this->input->post('title');
+	 $data['Title'] = $this->input->post('Title');
 	 $data['description'] = $this->input->post('description');
 
 	 $data['id'] = $this->input->post('id');
 	 $user=$data['id'];
-	//  print_r($user);
-	//  die;
+	//  echo"$user";die;
 	 if (!$this->form_validation->run() == FALSE) {
 		echo "hello";
 		die;
@@ -910,8 +996,6 @@ public function editnews($user) {
 	} else {
 		 $this->load->model('news');
 		$this->news->updatenews($user, $data);
-		// echo "hello";
-		// die;
 		redirect('UserController/news');
 
 		
@@ -929,15 +1013,12 @@ public function editnews($user) {
    }
 
    public function addnewsdata() {
-    $data['name'] = $this->input->post('name');
-    $data['title'] = $this->input->post('title');
+    $data['Title'] = $this->input->post('Title');
     $data['description'] = $this->input->post('description');
-
 	$data['image']=$this->input->post('image');
 
     // Form validation
-    $this->form_validation->set_rules('name', 'Name', 'required');
-    $this->form_validation->set_rules('title', 'Title', 'required');
+    $this->form_validation->set_rules('Title', 'Title', 'required');
     $this->form_validation->set_rules('description', 'Description', 'required');
 
 
@@ -983,6 +1064,51 @@ public function editnews($user) {
           $this->news->newsdelete($user);
           redirect('UserController/news', 'refresh'); 
 }
+
+
+
+
+// blog site categ. dynamic select
+public function category() {
+	$this->check_login();
+	$this->load->model('userlist');
+	
+	$data['category'] = $this->userlist->category();
+	$this->load->view('user/addblog', $data);
+
+
+}
+// newscat
+public function newscategorias()
+{        
+	$config = array();
+	$config['base_url'] = base_url('UserController/newscategorias');  
+	$config['total_rows'] = $this->userlist->getCountBlogc();    
+	$config['per_page'] = 5;                                 
+	$config['uri_segment'] = 3;                              
+
+	
+	$this->pagination->initialize($config);
+	$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	$data['users'] = $this->userlist->getnewsc($config['per_page'], $page);
+	$data['links'] = $this->pagination->create_links();
+	// Load the view
+		  $this->load->model('userlist');
+		  $this->load->view('user/header');
+		  $this->load->view('user/sidebar');
+		  $this->load->view('user/topbar');
+		  $this->load->view('user/newscat',['data'=>$data]);
+		  $this->load->view('user/footer');
+} 
+
+ // delete news categ 
+ public function deletenewsc($user){
+		
+	$this->load->model('news');
+	$this->news->newsdeletec($user);
+	redirect('UserController/news', 'refresh'); 
+}
+
 
 }
 ?>

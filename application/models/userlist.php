@@ -13,8 +13,6 @@ class userlist extends CI_Model {
           $this->db->where("id",$id);
           $query= $this->db->get("form");
           $result=$query->row_array();
-        //   print_r($result); 
-        //   die;
           return $result;
 
        }    
@@ -64,15 +62,11 @@ class userlist extends CI_Model {
 //change userpass
 public function userpass($user_id, $old_password, $new_password)
 {  
-    //  echo $user. $old_password. $new_password; die;
 
     $this->db->where('id', $user_id);
     $this->db->where('password', $old_password); 
     $query = $this->db->get('form'); 
-
     echo $this->db->last_query();
-
-
     if ($query->num_rows() > 0) {
         $update = [
             'password' => $new_password 
@@ -94,7 +88,6 @@ public function userpass($user_id, $old_password, $new_password)
         return $query->result_array();           
     }
     public function getCountBlog(){
-
         $this->db->where('recycle',1);
          return $this->db->count_all_results('bloglist');  
     }
@@ -102,16 +95,40 @@ public function userpass($user_id, $old_password, $new_password)
    // for bloglistcategorias
 
    public function getusersc($limit, $start) {
-    // $this->db->where('recycle', 1);
-    $this->db->limit($limit, $start);  
-    $query = $this->db->get('bloglist');    
+    
+    $this->db->limit($limit, $start); 
+    // $this->db->where('title'=>'business'); 
+    $query = $this->db->get('blogcateg');    
     return $query->result_array();           
 }
 public function getCountBlogc(){
-
-    // $this->db->where('recycle',1);
      return $this->db->count_all_results('bloglist');  
 } 
+
+// for deleteblogcat
+public function deleteblogcat($id)
+{
+   return $this->db->delete('blogcateg', array('id' => $id));
+}
+
+//for cateditdata
+public function cateditdata($user) {
+    $this->db->where('id', $user);
+    $query = $this->db->get('blogcateg'); 
+    return $query->row_array(); 
+}
+//for catupdatedata   
+public function catupdatedata($user, $data) {
+    $updatedata=[
+        'Title'=> $data['Title'],  
+        'MetaDescription'=> $data['MetaDescription'],  
+        'MetaKeyword'=> $data['MetaKeyword'],  
+        'SEO_Robat'=> $data['SEO_Robat']
+      
+    ];
+    $this->db->where('id', $user);
+    return $this->db->update('blogcateg', $updatedata); 
+}
 
  //for editblog
     public function editblog($user) {
@@ -121,13 +138,8 @@ public function getCountBlogc(){
     }
  //for updateblog   
     public function updateblog($user, $data) {
-        $updateblog=[
-            'name' => $data['name'],    
-            'title'=> $data['title'],
-            'SEO_Title'=> $data['SEO_Title'],  
-            'MetaDescription'=> $data['MetaDescription'],  
-            'MetaKeyword'=> $data['MetaKeyword'],  
-            'SEO_Robat'=> $data['SEO_Robat'], 
+        $updateblog=[    
+            'Title'=> $data['Title'],
             'description'=> $data['description'],     
             'createdate'=> $data['createdate'],       
             'updatedate'=> $data['updatedate'] ,
@@ -174,7 +186,6 @@ public function blogdelete($user)
 {
     $this->db->where('id', $user);
     $this->db->update('bloglist', ['recycle' => 0]);
-
     if ($this->db->affected_rows() > 0) {
         return true;
     } else {
@@ -273,7 +284,10 @@ public function sidenews(){
     $query = $this->db->get("news");
     return $query->result_array();
    }
-
-
+// category dropdown 
+public function category() {
+    $query = $this->db->get('blogcateg');  // Perform the query
+    return $query->result_array();  // Return the result as an array
+  }
 }
 ?>

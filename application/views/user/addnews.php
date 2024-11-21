@@ -3,14 +3,10 @@
         <div class="form">
           <div id="register">Add News </div>
            <form class="requires-validation"  method="post" action="<?php echo base_url('UserController/addnewsdata');?>">
+                 
                     <div class="input">
-                           <label  for="name"> Author Name: </label>
-                           <input  type="text" name="name" placeholder="Full Name" >
-                    </div>
-
-                    <div class="input">
-                       <label  for="title">Title: </label>
-                       <input  type="text" name="title" placeholder="" >      
+                       <label  for="Title">Title: </label>
+                       <input  type="text" name="Title" placeholder="" >      
                     </div>
 
                     <div class="input">

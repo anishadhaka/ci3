@@ -24,7 +24,7 @@
                     <tr>
                    <!-- <?php  print_r($data['users']); ?> -->
                        <td> <?php echo $user['id'] ?></td>
-                       <td> <?php echo $user['title'] ?></td>
+                       <td> <?php echo $user['Title'] ?></td>
                        <td> <?php echo $user['date'] ?></td>
                        <td> <?php echo $user['email'] ?></td>
                        <td> <?php echo $user['number'] ?></td>

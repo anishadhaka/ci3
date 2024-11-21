@@ -3,57 +3,22 @@
               <form name="simple" method="POST" action="<?php echo base_url('UserController/updateblog') ?>">
                        <div id="heading"> Update Blog Data </div>
 
+
                        <div class="col-md-12">
-                        <label class="mb-3 mr-1" for="name">Name: </label>
-                        <input class="form-control" type="text" name="name" placeholder="Full Name" value="<?php echo $user['name'] ?>"/>
+                         <label class="mb-3 mr-1" for="Title">Title: </label>
+                          <input class="form-control" type="text" name="Title" placeholder=""value="<?php echo $user['Title'] ?>"/>      
                        </div>
 
-                       <div class="col-md-12">
-                         <label class="mb-3 mr-1" for="title">Title: </label>
-                          <input class="form-control" type="text" name="title" placeholder=""value="<?php echo $user['title'] ?>"/>      
-                       </div>
 
-                       <div class="col-md-12">
-                       <label  class="mb-3 mr-1"for="SEO_Title">SEO Title: </label>
-                       <input class="form-control"  type="text" name="SEO_Title" placeholder="" value="<?php echo $user['SEO_Title'] ?>"/>      
-                    </div>
-                    
-                    <div class="col-md-12">
-                                <label class="mb-3 mr-1" for="MetaDescription">MetaDescription</label>
-                                <textarea id="editor" class="form-control" type="description" name="MetaDescription"value="<?php echo $user['MetaDescription']; ?>">
-                     &lt;p&gt;<?php echo $user['MetaDescription'] ?>&lt;/p&gt;
-                       </textarea>
-                          </div>
-
-                    <!-- <div class="col-md-12">
-                       <label class="mb-3 mr-1" for="MetaDescription">MetaDescription: </label>
-                       <input class="form-control"  type="text" name="MetaDescription" placeholder="" value="<?php echo $user['MetaDescription'] ?>"/>      
-                    </div> -->
-
-                    <div class="col-md-12">
-                       <label class="mb-3 mr-1" for="MetaKeyword">MetaKeyword: </label>
-                       <input class="form-control"  type="text" name="MetaKeyword" placeholder=""value="<?php echo $user['MetaKeyword'] ?>"/>      
-                    </div>
-
-                    <div class="col-md-12">
-                       <label class="mb-3 mr-1" for="SEO_Robat">SEO_Robat: </label>
-                       <input class="form-control"   type="text" name="SEO_Robat" placeholder=""value="<?php echo $user['SEO_Robat'] ?>"/>      
-                    </div>
-
-                     
                        <div class="col-md-12">
                                 <label class="mb-3 mr-1" for="description">Description</label>
                                 <textarea id="editor" class="form-control" type="description" name="description"value="<?php echo $user['Description']; ?>">
-                     &lt;p&gt;<?php echo $user['description'] ?>&lt;/p&gt;
-                       </textarea>
-                          </div>
+                                  &lt;p&gt;<?php echo $user['description'] ?>&lt;/p&gt;
+                                 </textarea>
+                        </div>
 
 
-                      <!-- <div class="col-md-12">
-                         <label class="mb-3 mr-1" for="description">Description: </label>
-                         <textarea class="form-control" type="description" name="description" placeholder="description" value=""><?php echo $user['description'] ?></textarea>
-                         
-                      </div> -->
+
 
                       <div class="col-md-12">
                          <label class="mb-3 mr-1" for="createdate">Create Date: </label>

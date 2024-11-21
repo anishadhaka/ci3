@@ -12,7 +12,6 @@
                <thead>
                  <tr>
                    <th>id</td>
-                   <th>Name</th>
                    <th>Title</th>
                    <th>Description</th>
                    <th>image</th>
@@ -23,8 +22,7 @@
                 <?php foreach ($data['users'] as $user) { ?>  
                     <tr>
                        <td> <?php echo $user['id'] ?></td>
-                       <td> <?php echo $user['name'] ?></td>
-                       <td> <?php echo $user['title'] ?></td>
+                       <td> <?php echo $user['Title'] ?></td>
                        <td> <?php echo $user['description'] ?></td> 
                             <td>
                             <?php if (!empty($user['image'])): ?>

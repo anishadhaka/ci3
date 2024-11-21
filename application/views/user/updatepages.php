@@ -3,8 +3,8 @@
            <div id="register">Update page </div>
            <form class="requires-validation"  method="post" action="<?php echo base_url('UserController/updatepage');?>">
            <div class="input">
-                <label  for="title">Title: </label>
-                 <input  type="text" name="title" placeholder="" value="<?php echo $user['title'] ?>">
+                <label  for="Title">Title: </label>
+                 <input  type="text" name="Title" placeholder="" value="<?php echo $user['title'] ?>">
                  <input type="hidden" id="id" name="id" value="<?php echo $user['id']; ?>">   
                 </div>
                 <div class="input">

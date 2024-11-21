@@ -14,7 +14,7 @@
         <img src="<?php echo base_url('uploads/images/'.$row['image']);?>"/>
         
           <div class="date"><?= $row['createdate']; ?></div>
-          <h1><?php echo $row['title']; ?></h1>
+          <h1><?php echo $row['Title']; ?></h1>
           <p><?php echo $row['description']; ?></p>
           <p>Created Date: <?= $row['createdate']; ?></p>
           <p>Updated Date: <?= $row['updatedate']; ?></p>

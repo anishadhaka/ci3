@@ -8,7 +8,7 @@
       <div class="review-card">
       <img src="<?php echo base_url('uploads/images/'.$row['image']);?>"/>
        
-        <h1><?php echo $row['title']; ?></h1>
+        <h1><?php echo $row['Title']; ?></h1>
         <p><?php echo $row['description']; ?></p>
         <!-- <a href="<?php echo base_url('UserController/read_more/' . $row['id']); ?>" class="read-more">Read More</a> -->
       </div>

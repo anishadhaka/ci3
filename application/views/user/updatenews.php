@@ -3,15 +3,12 @@
               <form name="simple" method="POST" action="<?php echo base_url('UserController/updatenews') ?>">
                        <div id="heading"> Update news Data </div>
 
-                       <div class="col-md-12">
-                        <label class="mb-3 mr-1" for="name">Name: </label>
-                        <input class="form-control" type="text" name="name" placeholder="Full Name" value="<?php echo $user['name'] ?>"/>
-                        <input class="form-control" type="hidden" name="id" placeholder="Full Name" value="<?php echo $user['id'] ?>"/>
-                       </div>
+                    
 
                        <div class="col-md-12">
-                         <label class="mb-3 mr-1" for="title">Title: </label>
-                          <input class="form-control" type="text" name="title" placeholder=""value="<?php echo $user['title'] ?>"/>      
+                         <label class="mb-3 mr-1" for="Title">Title: </label>
+                          <input class="form-control" type="text" name="Title" placeholder=""value="<?php echo $user['title'] ?>"/>  
+                          <input type="hidden"  name="id" value="<?php echo $user['id'] ?>"/>   
                        </div>
                      
                        <div class="col-md-12">

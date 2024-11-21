@@ -9,7 +9,7 @@
             <div class="review-card">
                 <img src="uploads/images/<?php echo $row['image']; ?>" alt="Review Image">
                 <div class="date"><?= $row['createdate']; ?></div>
-                <h1><?php echo $row['title']; ?></h1>
+                <h1><?php echo $row['Title']; ?></h1>
                 <a href="<?php echo base_url('UserController/read_more/' . $row['id']); ?>" class="read-more">Read More</a>
             </div>
         <?php endforeach; ?>
@@ -23,7 +23,7 @@
         <?php foreach($news as $row): ?>
             <div class="review-card2">
                 <img src="uploads/images/<?php echo $row['image']; ?>" alt="News Image">
-                <h1><?php echo $row['title']; ?></h1>
+                <h1><?php echo $row['Title']; ?></h1>
                 <!-- <p><?php echo $row['description']; ?></p> -->
                 <a href="<?php echo base_url('UserController/read_morenews/' . $row['id']); ?>" class="read-more">Read More</a>
             </div>
