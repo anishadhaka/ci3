@@ -90,36 +90,46 @@ body {
       font-size: 0.9rem;
     }
   }
-  .list {
+  .side {
+    padding-left: 80px;
+    padding-right: 30px;
+    padding-top: 20px;
+    margin-top: 30px;
+    margin-right: 90px;
+    max-height: 700px;  
+    overflow-y: auto;   
+}
+
+.list {
     width: 100%;
     margin: 0;
-    padding: 0; 
-    align-items: start;
-  }
-  
-  .li-container {
+    padding: 0;
+    align-items: flex-start; 
+}
+
+.li-container {
     display: flex;
-    align-items: start;  
+    align-items: flex-start;  
     text-align: left;
     width: 100%;
     border-top: .5px solid #e9e5e5;
     padding-top: 10px;
-    margin-left: 0; 
-  }
-  
-  .li-container img {
-    height: 50px;  
-    width: 50px;   
-    object-fit: cover;  
-    border-radius: 5px; 
-    margin-right: 10px;  
-  }
-  
-  .li-container h5 {
+    margin-left: 0;
+}
+
+.li-container img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.li-container h5 {
     font-size: 1rem;
     margin: 0;
     color: #333;
-  }
+}
   ul li {
     margin: 10px 0;
   }

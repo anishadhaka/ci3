@@ -16,7 +16,12 @@
                          <?php endif; ?>
                         </select>
                         </div>
-
+                         
+                         
+                        <div class="col-md-12">
+                        <label class="mb-3 mr-1" for="name">Name: </label>
+                         <input class="form-control" type="text" name="name" placeholder="name" value="<?php echo $user['name'] ?>"/>    
+                       </div></br>
 
                        <div class="col-md-12">
                                 <label class="mb-3 mr-1" for="description">Description</label>

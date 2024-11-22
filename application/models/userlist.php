@@ -144,6 +144,7 @@ public function catupdatedata($user, $data) {
     public function updateblog($user, $data) {
         $updateblog=[    
             'Title'=> $data['Title'],
+            'name'=> $data['name'],
             'description'=> $data['description'],     
             'createdate'=> $data['createdate'],       
             'updatedate'=> $data['updatedate'] ,

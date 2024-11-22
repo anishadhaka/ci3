@@ -18,7 +18,12 @@
                          <?php endif; ?>
                         </select>
                         </div>
-         </div>
+        
+        <div class="input">
+          <label for="name">Name: </label>
+          <input type="text" name="name" placeholder=""/>    
+        </div>
+      </div>
 
       <div class="form-row">
         <div class="input">

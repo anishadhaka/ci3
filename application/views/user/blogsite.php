@@ -5,7 +5,7 @@
             <div class="review-card">
                 <img src="uploads/images/<?php echo $row['image']; ?>" alt="Review Image">
                 <div class="date"><?= $row['createdate']; ?></div>
-                <h1><?php echo $row['Title']; ?></h1>
+                <h1><?php echo $row['name']; ?></h1>
                 <a href="<?php echo base_url('UserController/read_more/' . $row['id']); ?>" class="read-more">Read More</a>
             </div>
         <?php endforeach; ?>

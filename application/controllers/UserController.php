@@ -395,14 +395,10 @@ public function editblog($user) {
 	
 // for blogupdate
 	public function updateblog() {
-	//    $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
 
 	
 	$this->form_validation->set_rules('Title', 'Title', 'required');
-	// $this->form_validation->set_rules('SEO_Title', 'SEO_Title', 'required');
-    // $this->form_validation->set_rules('MetaDescription', 'MetaDescription', 'required');
-    // $this->form_validation->set_rules('MetaKeyword', 'MetaKeyword', 'required');
-    // $this->form_validation->set_rules('SEO_Robat', 'SEO_Robat', 'required');
+	$this->form_validation->set_rules('name', 'name', 'required');
 	$this->form_validation->set_rules('password', 'description', 'required');
 	$this->form_validation->set_rules('number', 'createdate', 'required');
 	$this->form_validation->set_rules('city', 'updatedate', 'required');
@@ -410,10 +406,7 @@ public function editblog($user) {
 	
 	
 	 $data['Title'] = $this->input->post('Title');
-	//  $data['SEO_Title'] = $this->input->post('SEO_Title');
-	//  $data['MetaDescription'] = $this->input->post('MetaDescription');
-	//  $data['MetaKeyword'] = $this->input->post('MetaKeyword');
-	//  $data['SEO_Robat'] = $this->input->post('SEO_Robat');
+	 $data['name'] = $this->input->post('name');
 	 $data['description'] = $this->input->post('description');
 	 $data['createdate'] = $this->input->post('createdate');
 	 $data['updatedate'] = $this->input->post('updatedate');
@@ -428,8 +421,6 @@ public function editblog($user) {
 		 $this->load->model('userlist');
 		 $data['categories'] = $this->userlist->categoryc(); 
 		$this->userlist->updateblog($user, $data);
-		// echo "hello";
-		// die;
 		redirect('userController/blog');
 
 		
@@ -452,6 +443,7 @@ public function editblog($user) {
 
    public function addblogdata() {
     $data['Title'] = $this->input->post('Title');
+    $data['name'] = $this->input->post('name');
     $data['description'] = $this->input->post('description');
     $data['createdate'] = $this->input->post('createdate');
     $data['updatedate'] = $this->input->post('updatedate');
@@ -596,8 +588,6 @@ public function cateditdata($user) {
 	} else {
 		 $this->load->model('userlist');
 		$this->userlist->catupdatedata($user, $data);
-		// echo "hello";
-		// die;
 		redirect('userController/bloglistcategorias');
 
 		
@@ -629,9 +619,6 @@ public function recycleblog()
  
     $data['user'] = $this->userlist->getblogrecycledata($config['per_page'], $page);
     $data['links'] = $this->pagination->create_links();
-	// print_r($data['links']);
-	// die;
-
     $this->load->view('user/header');
     $this->load->view('user/sidebar');
     $this->load->view('user/topbar');
@@ -669,14 +656,17 @@ public function catbeauty($categoryTitle = NULL) {
     $this->check_login();
 
     $data['categories'] = $this->userlist->categoryc();
-
- 
-    if ($categoryTitle) {
+    if ($categoryTitle ) {
         $data['user'] = $this->userlist->get_posts_by_category_name(urldecode($categoryTitle));  
         $data['categoryTitle'] = urldecode($categoryTitle);  
+    //  print_r($data);die;
+	//    redirect('UserController/catbeauty');
     } else {
-        $data['user'] = $this->userlist->blogsite();  
+        $data['user'] = $this->userlist->blogsite();
         $data['news'] = $this->userlist->blognews();
+        // $data['categoryTitle'] = "beauty"; 
+    //  print_r($data);
+
     }
 
     $this->load->view('user/blogsiteheader', $data);
@@ -696,20 +686,25 @@ public function blogsite($categoryTitle = NULL) {
         $data['user'] = $this->userlist->get_posts_by_category_name(urldecode($categoryTitle));  
         $data['categoryTitle'] = urldecode($categoryTitle);  
     //  print_r($data);die;
-	//    redirect('UserController/catbeauty');
+	
+	$this->load->view('user/blogsiteheader', $data);
+    $this->load->view('user/blogheader2');
+    $this->load->view('user/category_data', $data);  
+    $this->load->view('user/blogsitefooter');
     } else {
         $data['user'] = $this->userlist->blogsite();
         $data['news'] = $this->userlist->blognews();
-        // $data['categoryTitle'] = "beauty"; ~
+        // $data['categoryTitle'] = "beauty"; 
     //  print_r($data);
+	$this->load->view('user/blogsiteheader', $data);
+    $this->load->view('user/blogheader2');
+    $this->load->view('user/blogsite', $data);  
+    $this->load->view('user/blogsitefooter');
 
     }
     //  print_r($data);
 	
-    $this->load->view('user/blogsiteheader', $data);
-    $this->load->view('user/blogheader2');
-    $this->load->view('user/blogsite', $data);  
-    $this->load->view('user/blogsitefooter');
+
 }
 // blogsite about 
 
