@@ -3,9 +3,12 @@
     width: 250px;
     background-color: #343a40;
     color: white;
-    display: flex;
-    flex-direction: column;
-  height:1000px;
+    /* display: flex; */
+    /* flex-direction: column; */
+  height:800px;
+}
+.sidebar-header h4 img {
+    height: 70px;
 }
 
 .sidebar-header {
@@ -24,14 +27,14 @@
 .sidebar-menu li {
     padding: 15px 20px;
     cursor: pointer;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .sidebar-menu li a {
     color: white;
     text-decoration: none;
     cursor: pointer;
-    width: 100%;
+    /* width: 100%; */
     display: inline-block;
 }
 
@@ -63,11 +66,60 @@
 .sidebar-menu .dropdown-menu li a {
     color: white;
     text-decoration: none;
-    display: inline-block;
+    /* display: inline-block; */
     width: 100%;
 }
 
 .sidebar-menu .dropdown-menu li:hover {
-    background-color: #007bff;
+    /* background-color: #007bff; */
     cursor: pointer;
+}
+.sidebar-menu a, .dropdown-btn {
+    /* padding: 6px 8px 6px 16px; */
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    /* display: block; */
+    border: none;
+    background: none;
+    /* width: 100%; */
+    /* text-align: left; */
+    cursor: pointer;
+    outline: none;
+  }
+  .sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+.sidenav a, .dropdown-btn {
+    /* padding: 6px 8px 6px 16px; */
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+.sidenav a:hover, .dropdown-btn:hover {
+    color: #f1f1f1;
+}
+.active {
+    background-color: green;
+    color: white;
+}
+.dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
 }

@@ -3,10 +3,27 @@
         <div class="form">
           <div id="register">Add News </div>
            <form class="requires-validation"  method="post" action="<?php echo base_url('UserController/addnewsdata');?>">
-                 
+                    
+
+
+                     <div class="input">
+                      <label  for="name">Name: </label>
+                      <input type="text" name="name" ><br><br>
+  
+                    </div>
+
                     <div class="input">
-                       <label  for="Title">Title: </label>
-                       <input  type="text" name="Title" placeholder="" >      
+                    <label  for="description">Title: </label>
+                    <select class="textarea" id="Title" name="Title" required>
+                         <?php if (!empty($newscategories)): ?>
+                         <?php foreach ($newscategories as $categorys): ?>
+                             <option value="<?php echo $categorys['Title']; ?>"><?php echo $categorys['Title']; ?></option>
+                         <?php endforeach; ?>
+                         <?php else: ?>
+                         <option value="">No Categories Available</option>
+                         <?php endif; ?>
+                        </select>
+                            
                     </div>
 
                     <div class="input">

@@ -1,0 +1,73 @@
+/* General Layout Styling */
+*{
+    margin: 0px;
+    padding: 0%;
+}
+#form {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    /* height: 900px; */
+}
+
+#heading {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.col-md-12 {
+    margin-bottom: 15px;
+}
+
+/* Two-Column Layout */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-row .col-md-6 {
+    flex: 0 0 40%; 
+}
+
+.form-row .col-md-12 {
+    flex: 0 0 100%; 
+}
+
+/* Textarea (Description) Styling with Scrollbar */
+#editor {
+    height: 100px;
+    overflow-y: auto; 
+    resize: vertical; 
+}
+
+/* Form Button Styling */
+.form-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Image Upload Styling */
+#image {
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}

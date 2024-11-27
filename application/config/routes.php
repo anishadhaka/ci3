@@ -62,6 +62,12 @@ $route['contactus']= 'UserController/contactus';
 $route['categorias']= 'UserController/blogsitecategories';
 $route['pageslist']= 'UserController/pageslist';
 $route['category/(:num)'] = 'UserController/category/$1';
+$route['blogs/(:any)/(:any)'] = 'UserController/read_more/$1/$2';
+// $route['blogsite/(:any)'] = 'UserController/blogsite/$1';  
+$route['news/(:any)'] = 'UserController/news_category/$1';
+$route['newsc/(:any)/(:any)'] = 'UserController/read_more1/$1/$2';
+
+
 
 
 

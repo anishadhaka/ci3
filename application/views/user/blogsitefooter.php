@@ -22,10 +22,10 @@
             <div class="footer-section">
                 <h3>Follow Us</h3>
                 <ul class="social-links">
-                    <li><a href="#" target="_blank"><i class="fa-brands fa-facebook" style="color:skyblue;"></i></a></li>
-                    <li><a href="#" target="_blank"><i class="fa-brands fa-twitter" style="color:skyblue";></i></a></li>
-                    <li><a href="#" target="_blank"><i class="fa-brands fa-square-instagram" style="color:pink;"></i></a></li>
-                    <li><a href="#" target="_blank"><i class="fa-brands fa-linkedin" style="color:skyblue;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa-brands fa-facebook" style=""></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa-brands fa-twitter" style="";></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa-brands fa-square-instagram" style=""></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa-brands fa-linkedin" style=""></i></a></li>
                 </ul>
             </div>
         </div>

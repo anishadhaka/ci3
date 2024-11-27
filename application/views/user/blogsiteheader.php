@@ -17,7 +17,11 @@
 
 <header>
     <div class="logo">
-      <h1><i class="fa-solid fa-sailboat"> </i><b>DW</b>Digita Web</h1>
+      <h1>
+        <!-- <i class="fa-solid fa-sailboat"> </i> -->
+        <img src="https://www.absglobaltravel.com/public/images/footer-abs-logo.webp"  width="200px">
+      <!-- <b>DW</b>Digita Web -->
+    </h1>  
     </div>
     <nav>
     <!-- <?php echo '<pre>'; print_r($categories); echo '</pre>'; ?> -->
@@ -29,7 +33,7 @@
               <?php if (!empty($categories)): ?>
               <?php foreach ($categories as $category): ?>
             <li>
-                <a href="<?php echo base_url('UserController/blogsite/' . $category['Title'] . '/'. $category['category_id']); ?>" 
+                <a href="<?php echo base_url('UserController/blogsite/' . $category['Title']  ); ?>" 
                 class="category-link" ><?php echo htmlspecialchars($category['Title']); ?></a>
             </li>
               <?php endforeach; ?>
@@ -37,12 +41,42 @@
               <li>No categories available</li>
               <?php endif; ?>
            </ul>
+
+  
         </li>
+
             <li><a href="<?php echo base_url('UserController/blogsiteabout'); ?>">About</a></li>
             <li><a href="<?php echo base_url('contactus'); ?>">Contact Us</a></li>
+            <li class="dropdown">
+    <!-- <?php echo '<pre>'; print_r($newscategories); echo '</pre>'; ?> -->
+
+                <a href="#" class="dropbtn1">News Categorías <i class="fa-solid fa-caret-down"></i></a>
+                <ul class="dropdown-content1">
+                  <?php if (!empty($newscategories)): ?>
+                  <?php foreach ($newscategories as $category): ?>
+                    <li><a href="<?php echo base_url('UserController/news_category/' . $category['Title']); ?>">
+                      <?php echo htmlspecialchars($category['Title']); ?>
+                    </a>
+                    </li>
+                  <?php endforeach; ?>
+                  <?php else: ?>
+                    <li>No news categories available</li>
+                  <?php endif; ?>
+                </ul>
+            </li>
+            
         </ul>
     </nav>
 </header>
+
+
+<script>
+    document.querySelector('.dropbtn1').addEventListener('click', function(event) {
+        event.preventDefault();
+        var dropdown = document.querySelector('.dropdown-content1');
+        dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+    });
+</script>
 
 
 

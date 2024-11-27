@@ -7,8 +7,8 @@
       
       <div class="form-row">
       <div class="input">
-                                <label>Title</label>
-                                <select class="textarea" id="Title" name="Title" required>
+                         <label>Title</label>
+                         <select class="textarea" id="Title" name="Title" required>
                          <?php if (!empty($category)): ?>
                          <?php foreach ($category as $categorys): ?>
                              <option value="<?php echo $categorys['Title']; ?>"><?php echo $categorys['Title']; ?></option>

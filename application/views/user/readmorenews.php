@@ -6,10 +6,10 @@
      <h1> Category: <?php echo $post['Title']; ?></h1>
      <h1 style="font-size:26px;">  <?php echo $post['name']; ?></h1>
 
-    <div class="date"> Create Date:<?php echo $post['createdate']; ?></div>
-    <div class="date"> Update Date:<?php echo $post['updatedate']; ?></div>
+  
     <div class="content">
-        <p><?php echo $post['description']; ?><?= $content=substr($post['description'],0,50000); ?></p>
+        <p><?php echo $post['description']; ?></p>
+        <p><?php echo $post['full_content']; ?></p> 
     </div>
 </section>
 
@@ -19,7 +19,7 @@
           
           <?php foreach ($sideblog as $row):?>
             <li class="li-container"><img src="<?= base_url('uploads/images/' . $row['image']); ?>" class="card-img-top" ?>
-            <a href="<?= base_url('blogs/'). $row['Title']. '/'. $row['slug'];?>">
+            <a href="<?= base_url('newsc/'). $row['Title']. '/'. $row['slug'];?>">
               <h5 class="card-title"><?= $content=substr($row['name'],0,25); ?></h5>
               </a>
             </li>

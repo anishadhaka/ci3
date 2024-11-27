@@ -4,8 +4,8 @@
         <?php foreach($user as $row): ?>
             <div class="review-card">
             <img src="<?= base_url('uploads/images/' . $row['image']); ?>" class="card-img-top" ?>
-                <div class="date"><?= $row['createdate']; ?></div>
-                <a style="text-decoration:none;" href="<?php echo base_url('blogs/'). $row['Title']. '/'. $row['slug'];?>">
+                <!-- <div class="date"><?= $row['createdate']; ?>jb,jmn</div> -->
+                <a style="text-decoration:none;" href="<?php echo base_url('newsc/'). $row['Title']. '/'. $row['slug'];?>">
                 <h1><?php echo $row['name']; ?></h1>
                  </a>
           </div>

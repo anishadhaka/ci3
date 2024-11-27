@@ -7,14 +7,13 @@ class pageslist extends CI_Model {
 
 //pagination pages
             public function get_pages($limit, $start) {
-                $this->db->limit($limit, $start);  
+                // $this->db->limit($limit, $start);  
                 $query = $this->db->get('pageslist');
-               
                 $check= $query->result_array();  
                 return $check;    
             }
             public function getCountpage() {
-                 return $this->db->count_all('pageslist');  
+                //  return $this->db->count_all('pageslist');  
             }
 
 // add page
@@ -50,7 +49,7 @@ public function usereditdata($user) {
 //for update pages  
 public function update_userpage($user, $data) {
     $updatedata=[
-        'title' => $data['title'] ,
+        'Title' => $data['Title'] ,
         'date' => $data['date'] ,
         'email' => $data['email'],
         'number' => $data['number'],
