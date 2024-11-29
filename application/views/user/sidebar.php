@@ -8,7 +8,7 @@
         </div>
         <ul class="sidebar-menu">
             <li><a href="<?php echo base_url('UserController/welcome');?>"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-            <li><a href="<?php echo base_url('UserController/profile');?>"> <i class="fa-solid fa-user"></i> Profile</a></li>
+            <li><a href="<?php echo base_url('UserController/company_details');?>"> <i class="fa-solid fa-user"></i> Profile</a></li>
             <li><a href="<?php echo base_url('UserController/view');?>"> <i class="fa-solid fa-users"></i> User List</a></li>
 
             <li class="dropdown">

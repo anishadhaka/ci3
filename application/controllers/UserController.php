@@ -138,16 +138,13 @@ public function welcome() {
 		}
 	}
 
-// profile
-public function profile(){
-    $this->check_login();
-     $id = $this->session->userdata('id');
-     $this->load->model('userlist');
-     $data['user'] = $this->userlist->fetchdata($id);
+// company_details
+public function company_details(){
+
 	 $this->load->view('user/header');
 	 $this->load->view('user/sidebar');
 	 $this->load->view('user/topbar');
-     $this->load->view('user/profile', $data);
+     $this->load->view('user/company_details', $data);
 
     }	
       
@@ -183,7 +180,7 @@ public function usereditdata($user) {
 			$this->load->view('user/footer');
 		}
         	
- // for update
+   // for update
             public function userupdatedata() {
            	$this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
 
