@@ -395,7 +395,7 @@ public function getprofileData() {
 	$order_dir = $_POST['order'][0]['dir']; 
 	
 	
-	$columns = ['id', 'company_name', 'company_type', 'company_email']; 
+	$columns = ['id','company_id', 'company_name', 'company_type', 'company_email']; 
 	$order_by = $columns[$order_column]; 
 
 	
@@ -408,10 +408,11 @@ public function getprofileData() {
 	foreach ($blogs as $blog) {
 		$data[] = [
 			$counter++,
+			htmlspecialchars($blog->company_id),
 			htmlspecialchars($blog->company_name),
 			htmlspecialchars($blog->company_type),
 			htmlspecialchars($blog->company_email),
-			"<a href='" . base_url('Welcome//' . $blog->id) . "' class='edit-btn'>Address</a>",
+			"<button class='btn btn-primary view-address-btn' data-company-id='" . $blog->company_id . "'>View Address</button>",
 			"<a href='" . base_url('Welcome/companyeditdata/' . $blog->id) . "' class='edit-btn'>Edit</a>",
 			"<a href='" . base_url('Welcome/delete_company/' . $blog->id) . "' class='delete-btn' onclick='return confirm(\"Are you sure you want to delete this blog?\")'>Delete</a>"
 		];
@@ -446,6 +447,7 @@ public function getprofileData() {
 	$this->form_validation->set_rules('company_type', 'company_type', 'required');
 	$this->form_validation->set_rules('company_email', 'company_email', 'required');
 
+	$data['company_id'] = $this->input->post('company_id');
 	 $data['company_name'] = $this->input->post('company_name');
 	 $data['company_type'] = $this->input->post('company_type');
 	 $data['company_email'] = $this->input->post('company_email');
@@ -466,7 +468,7 @@ public function getprofileData() {
 		$this->userlist->update_company($user, $data);
 		// echo "hello";
 		// die;
-		redirect('UserController/company_details');
+		redirect('UserController/companies');
 
 		
 	}
@@ -477,8 +479,189 @@ public function getprofileData() {
  {
   $this->load->model('userlist');
 	 $this->userlist->delete_company($id);	
-	 redirect('UserController/company_details');
+	 redirect('UserController/companies');
  }
+ // add company view page
+ public function addcmp($data=array())
+   {     
+	     $this->load->view('user/header');
+		 $this->load->view('user/sidebar');
+		 $this->load->view('user/topbar');
+	     $this->load->view('user/addcmp');
+		 $this->load->view('user/footer');
+   }
+ // add company
+   public function add (){
+	$data['company_id'] = $this->input->post('company_id');
+   $data['company_name'] = $this->input->post('company_name');
+   $data['company_type'] = $this->input->post('company_type');
+   $data['company_email'] = $this->input->post('company_email');
+
+   // print_r($data);
+   // die;
+   $this->form_validation->set_rules('company_name', 'company_name', 'required');
+   $this->form_validation->set_rules('company_type', 'company_type', 'required');
+   $this->form_validation->set_rules('company_email', 'company_email', 'required');
+
+   if ($this->form_validation->run() == FALSE)
+   {
+	   $this->load->view('user/addcomp'); 
+   }
+   else
+   {
+	   $this->load->model('userlist');
+	   $check = $this->userlist->add($data);
+	   if($check == true){
+		   redirect('UserController/companies');
+	   }
+   }	
+  }	
+
+//
+public function getprofileData2() {
+	header("Access-Control-Allow-Origin: *");  
+	header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+	header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+	$this->load->model('userlist');
+	
+	
+	$search = $this->input->post('search')['value'];
+	$start = $this->input->post('start');
+	$length = $this->input->post('length');
+	$draw = $this->input->post('draw');
+
+	
+	$order_column = $_POST['order'][0]['column']; 
+	$order_dir = $_POST['order'][0]['dir']; 
+	
+	
+	$columns = ['id','company_id', 'address', 'latitude', 'longitute','mobile']; 
+	$order_by = $columns[$order_column]; 
+
+	
+	$blogs = $this->userlist->getFilteredprofile2($start, $length, $search, $order_by, $order_dir);
+	$totalRecords = $this->userlist->countAllprofile2();
+	$filteredRecords = $this->userlist->countFilteredprofile2($search);
+
+	$counter = $start + 1;
+	$data = [];
+	foreach ($blogs as $blog) {
+		$data[] = [
+			$counter++,
+			htmlspecialchars($blog->company_id),
+			htmlspecialchars($blog->address),
+			htmlspecialchars($blog->latitude),
+			htmlspecialchars($blog->longitute),
+			htmlspecialchars($blog->mobile),
+			// "<button class='btn btn-primary view-address-btn' data-company-id='" . $blog->id . "'>View Address</button>",
+			"<a href='" . base_url('Welcome/companyeditdata2/' . $blog->company_id) . "' class='edit-btn'>Edit</a>",
+			"<a href='" . base_url('Welcome/delete_company2/' . $blog->company_id) . "' class='delete-btn' onclick='return confirm(\"Are you sure you want to delete this blog?\")'>Delete</a>"
+		];
+		
+	}
+	$response = [
+		"draw" => intval($draw),
+		"recordsTotal" => $totalRecords,
+		"recordsFiltered" => $filteredRecords,
+		"data" => $data
+	];
+	echo json_encode($response);
+ }
+ 
+
+ // edit data 
+ public function companyeditdata2($blog) {
+	$this->load->model('userlist');
+	// echo $blog; die;
+	$data['user'] = $this->userlist->companyeditdata2($blog);
+	$this->load->view('user/header');
+	$this->load->view('user/sidebar');
+	$this->load->view('user/topbar');
+	$this->load->view('user/update_address', $blog);
+	$this->load->view('user/footer');
+ }
+	
+ // for update
+	public function companyupdatedata2() {
+	// echo $blog; die;
+
+	   $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
+
+	$this->form_validation->set_rules('address', 'address', 'required');
+	// $this->form_validation->set_rules('latitude', 'latitude', 'required');
+	// $this->form_validation->set_rules('longitute', 'longitute', 'required');
+
+	 $data['address'] = $this->input->post('address');
+	 $data['latitude'] = $this->input->post('latitude');
+	 $data['longitute'] = $this->input->post('longitute');
+	 $data['mobile'] = $this->input->post('mobile');
+
+
+	 $data['company_id'] = $this->input->post('company_id');
+	 $user=$data['company_id'];
+	 if ($this->form_validation->run() == FALSE) {
+		$this->load->model('userlist');
+		$data['user'] = $this->userlist->companyeditdata2($blog);
+		$this->load->view('user/update_address',$data);
+		echo "hello";
+		die;
+	} else {
+		// echo "qihqsi";
+		// die;
+		 $this->load->model('userlist');
+		$this->userlist->update_company2($user, $data);
+		// echo "hello";
+		// die;
+		redirect('UserController/companies');
+
+		
+	}
+
+ }
+  //for delete  
+ public function delete_company2($company_id)
+ {
+  $this->load->model('userlist');
+	 $this->userlist->delete_company2($company_id);	
+	//  print_r($data);die;
+	//  $this->load->view('user/update_companydata');
+	redirect('UserController/companies');
+
+ }
+
+    public function adddata (){
+		// echo"jnbj,m";die;
+		$data['company_id'] = $this->input->post('company_id');
+    $data['address'] = $this->input->post('address');
+    $data['latitude'] = $this->input->post('latitude');
+    $data['longitute'] = $this->input->post('longitute');
+    $data['mobile'] = $this->input->post('mobile');
+    
+    // print_r($data);
+    // die;
+    $this->form_validation->set_rules('address', 'address', 'required');
+    // $this->form_validation->set_rules('latitude', 'latitude', 'required');
+    // $this->form_validation->set_rules('longitute', 'longitute', 'required');
+    // $this->form_validation->set_rules('mobile', 'mobile', 'required');
+    
+    
+    if ($this->form_validation->run() == FALSE)
+    {   echo"incomp";die;
+    	// $this->load->view('user/adduser'); 
+    	redirect('Welcome/getprofileData2');
+    }
+    else
+    {
+    	$this->load->model('userlist');
+    	$check = $this->userlist->adduser($data);
+		// print_r($check);die;
+    	if($check == true){
+    		redirect('UserController/companies');
+	//  $this->load->view('user/company_details');
+
+    	}
+    }	
+    }	
 
 }
 

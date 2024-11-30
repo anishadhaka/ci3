@@ -139,7 +139,7 @@ public function welcome() {
 	}
 
 // company_details
-public function company_details(){
+public function companies(){
 
 	 $this->load->view('user/header');
 	 $this->load->view('user/sidebar');

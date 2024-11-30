@@ -7,17 +7,17 @@
       
       <div class="form-row">
       <div class="input">
-                         <label>Title</label>
-                         <select class="textarea" id="Title" name="Title" required>
-                         <?php if (!empty($category)): ?>
-                         <?php foreach ($category as $categorys): ?>
-                             <option value="<?php echo $categorys['Title']; ?>"><?php echo $categorys['Title']; ?></option>
-                         <?php endforeach; ?>
-                         <?php else: ?>
-                         <option value="">No Categories Available</option>
-                         <?php endif; ?>
-                        </select>
-                        </div>
+             <label>Title</label>
+             <select class="textarea" id="Title" name="Title" required>
+             <?php if (!empty($category)): ?>
+             <?php foreach ($category as $categorys): ?>
+                 <option value="<?php echo $categorys['Title']; ?>"><?php echo $categorys['Title']; ?></option>
+             <?php endforeach; ?>
+             <?php else: ?>
+             <option value="">No Categories Available</option>
+             <?php endif; ?>
+            </select>
+          </div>
         
         <div class="input">
           <label for="name">Name: </label>

@@ -2,6 +2,11 @@
 <div id="form">
               <form name="simple" method="POST" action="<?php echo base_url('Welcome/companyupdatedata') ?>">
                  <div id="heading"> Update Company Data </div>
+                       
+                 <div class="col-md-12">
+                        <label class="mb-3 mr-1" for="company_id">company_id: </label>
+                        <input class="form-control" type="number" name="company_id" placeholder="" value="<?php echo $user['company_id'] ?>"/>
+                       </div> 
 
                        <div class="col-md-12">
                         <label class="mb-3 mr-1" for="company_name">company_name: </label>

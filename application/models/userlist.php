@@ -630,7 +630,7 @@ public function getFilteredRecycleBlogs($start, $length, $search, $order_by, $or
     return $this->db->count_all_results('bloglist'); 
  }
 
-//for fetch data of user from form table
+//for fetch data of company from form table
 
 public function getFilteredprofile($start, $length, $search, $order_by, $order_dir) {
         
@@ -651,13 +651,13 @@ public function getFilteredprofile($start, $length, $search, $order_by, $order_d
 
    
     $this->db->limit($length, $start);
-    $query = $this->db->get('company_details');
+    $query = $this->db->get('companies');
     return $query->result();
  }
 
 
   public function countAllprofile() {
-    return $this->db->count_all('company_details'); 
+    return $this->db->count_all('companies'); 
  }
 
  public function countFilteredprofile($search) {
@@ -667,34 +667,137 @@ public function getFilteredprofile($start, $length, $search, $order_by, $order_d
         $this->db->or_like('company_type', $search);
     }
    
-    return $this->db->count_all_results('company_details'); 
+    return $this->db->count_all_results('companies'); 
  }
 
  //for edit
  public function companyeditdata($user) {
     $this->db->where('id', $user);
-    $query = $this->db->get('company_details'); 
+    $query = $this->db->get('companies'); 
     return $query->row_array(); 
  }
  //for update   
  public function update_company($user, $data) {
     $updatedata=[
+        'company_id' => $data['company_id'], 
         'company_name' => $data['company_name'],    
         'company_type'=> $data['company_type'],  
         'company_email'=> $data['company_email']
     ];
     $this->db->where('id', $user);
-    return $this->db->update('company_details', $updatedata); 
+    return $this->db->update('companies', $updatedata); 
  }
  // for delete
  public function delete_company($id)
  {
-   return $this->db->delete('company_details', array('id' => $id));
+   return $this->db->delete('companies', array('id' => $id));
  }
 //
+ //add user 
+ public function add($data) {
+    $data = array(
+        'company_id' => $data['company_id'] ,
+        'company_name' => $data['company_name'] ,
+        'company_type' => $data['company_type'] ,
+        'company_email' => $data['company_email']
+        // 'mobile' => $data['mobile']
+     );
+    //  print_r($data);die;
+     $this->db->insert('companies', $data);
+     return true ;
+}
+
+//for fetch data of company address from form table
+
+public function getFilteredprofile2($start, $length, $search, $order_by, $order_dir) {
+        
+    if (!empty($search)) {
+        $this->db->group_start(); 
+        $this->db->like('address', $search);
+        $this->db->or_like('latitude', $search);
+        $this->db->or_like('longitute', $search);
+        $this->db->group_end(); 
+    }
+  
+ 
+    if (!empty($order_by) && !empty($order_dir)) {
+        $this->db->order_by($order_by, $order_dir); 
+    } else {
+        $this->db->order_by('company_id', 'asc'); 
+    }
+
+   
+    $this->db->limit($length, $start);
+    // $this->db->where('company_id=100');
+    $query = $this->db->get('company_address');
+    return $query->result();
+ }
+
+
+  public function countAllprofile2() {
+    return $this->db->count_all('company_address'); 
+ }
+
+ public function countFilteredprofile2($search) {
+    if (!empty($search)) {
+        $this->db->like('company_id', $search);
+        $this->db->or_like('company_name', $search);
+        $this->db->or_like('company_type', $search);
+    }
+   
+    return $this->db->count_all_results('company_address'); 
+ }
+
+ //for edit
+ public function companyeditdata2($blog) {
+    $this->db->where('company_id', $blog);
+    $query = $this->db->get('company_address'); 
+    return $query->row_array(); 
+ }
+ //for update   
+ public function update_company2($user, $data) {
+    $updatedata=[
+        'company_id' => $data['company_id'],  
+        'address' => $data['address'],    
+        'latitude'=> $data['latitude'],  
+        'longitute'=> $data['longitute'],
+        'mobile'=> $data['mobile']
+
+    ];
+    // print_r($updatedata);die;
+    $this->db->where('company_id', $user);
+    return $this->db->update('company_address', $updatedata); 
+ }
+ // for delete
+ public function delete_company2($company_id)
+ {
+ //  print_r($company_id);die;
+   $check= $this->db->delete('company_address', array('company_id' => $company_id));
+//    print_r($check);die;   
+   return $check;
+ }
+//
+//add user 
+public function adduser($data) {
+    $data = array(
+        'company_id' => $data['company_id'] ,
+        'address' => $data['address'] ,
+        'latitude' => $data['latitude'] ,
+        'longitute' => $data['longitute'],
+        'mobile' => $data['mobile']
+     );
+     
+     $this->db->insert('company_address', $data);
+     return true ;
+}
+
 
 }
 ?>
+
+
+
+
 
 
 
