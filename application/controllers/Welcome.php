@@ -18,6 +18,15 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
+
+function __construct() {
+        parent::__construct();
+        $this->load->library('form_validation');
+		$this->load->model('userlist');	
+		
+        
+    } 
+
 public function index()
 	{
 		$this->load->view('welcome_message');
@@ -395,7 +404,7 @@ public function getprofileData() {
 	$order_dir = $_POST['order'][0]['dir']; 
 	
 	
-	$columns = ['id','company_id', 'company_name', 'company_type', 'company_email']; 
+	$columns = ['id', 'company_name', 'company_type', 'company_email']; 
 	$order_by = $columns[$order_column]; 
 
 	
@@ -408,11 +417,10 @@ public function getprofileData() {
 	foreach ($blogs as $blog) {
 		$data[] = [
 			$counter++,
-			htmlspecialchars($blog->company_id),
 			htmlspecialchars($blog->company_name),
 			htmlspecialchars($blog->company_type),
 			htmlspecialchars($blog->company_email),
-			"<button class='btn btn-primary view-address-btn' data-company-id='" . $blog->company_id . "'>View Address</button>",
+			"<button class='btn btn-primary view-address-btn' data-company-id='" . $blog->id . "'>View Address</button>",
 			"<a href='" . base_url('Welcome/companyeditdata/' . $blog->id) . "' class='edit-btn'>Edit</a>",
 			"<a href='" . base_url('Welcome/delete_company/' . $blog->id) . "' class='delete-btn' onclick='return confirm(\"Are you sure you want to delete this blog?\")'>Delete</a>"
 		];
@@ -430,7 +438,6 @@ public function getprofileData() {
  // edit data 
  public function companyeditdata($user) {
 	$this->load->model('userlist');
-	// echo $user; die;
 	$data['user'] = $this->userlist->companyeditdata($user);
 	$this->load->view('user/header');
 	$this->load->view('user/sidebar');
@@ -446,7 +453,7 @@ public function getprofileData() {
 	$this->form_validation->set_rules('company_name', 'company_name', 'required');
 	$this->form_validation->set_rules('company_type', 'company_type', 'required');
 	$this->form_validation->set_rules('company_email', 'company_email', 'required');
-
+     
 	$data['company_id'] = $this->input->post('company_id');
 	 $data['company_name'] = $this->input->post('company_name');
 	 $data['company_type'] = $this->input->post('company_type');
@@ -459,15 +466,9 @@ public function getprofileData() {
 		$this->load->model('userlist');
 		$data['user'] = $this->userlist->companyeditdata($user);
 		$this->load->view('user/update_companydata',$data);
-		// echo "hello";
-		// die;
 	} else {
-		// echo "qihqsi";
-		// die;
 		 $this->load->model('userlist');
 		$this->userlist->update_company($user, $data);
-		// echo "hello";
-		// die;
 		redirect('UserController/companies');
 
 		
@@ -475,7 +476,7 @@ public function getprofileData() {
 
  }
   //for delete  
- public function delete_company($id)
+public function delete_company($id)
  {
   $this->load->model('userlist');
 	 $this->userlist->delete_company($id);	
@@ -497,8 +498,6 @@ public function getprofileData() {
    $data['company_type'] = $this->input->post('company_type');
    $data['company_email'] = $this->input->post('company_email');
 
-   // print_r($data);
-   // die;
    $this->form_validation->set_rules('company_name', 'company_name', 'required');
    $this->form_validation->set_rules('company_type', 'company_type', 'required');
    $this->form_validation->set_rules('company_email', 'company_email', 'required');
@@ -517,151 +516,97 @@ public function getprofileData() {
    }	
   }	
 
+
+
 //
-public function getprofileData2() {
-	header("Access-Control-Allow-Origin: *");  
-	header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-	header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+public function getAddressData() {
 	$this->load->model('userlist');
-	
-	
-	$search = $this->input->post('search')['value'];
-	$start = $this->input->post('start');
-	$length = $this->input->post('length');
-	$draw = $this->input->post('draw');
-
-	
-	$order_column = $_POST['order'][0]['column']; 
-	$order_dir = $_POST['order'][0]['dir']; 
-	
-	
-	$columns = ['id','company_id', 'address', 'latitude', 'longitute','mobile']; 
-	$order_by = $columns[$order_column]; 
-
-	
-	$blogs = $this->userlist->getFilteredprofile2($start, $length, $search, $order_by, $order_dir);
-	$totalRecords = $this->userlist->countAllprofile2();
-	$filteredRecords = $this->userlist->countFilteredprofile2($search);
-
-	$counter = $start + 1;
-	$data = [];
-	foreach ($blogs as $blog) {
-		$data[] = [
-			$counter++,
-			htmlspecialchars($blog->company_id),
-			htmlspecialchars($blog->address),
-			htmlspecialchars($blog->latitude),
-			htmlspecialchars($blog->longitute),
-			htmlspecialchars($blog->mobile),
-			// "<button class='btn btn-primary view-address-btn' data-company-id='" . $blog->id . "'>View Address</button>",
-			"<a href='" . base_url('Welcome/companyeditdata2/' . $blog->company_id) . "' class='edit-btn'>Edit</a>",
-			"<a href='" . base_url('Welcome/delete_company2/' . $blog->company_id) . "' class='delete-btn' onclick='return confirm(\"Are you sure you want to delete this blog?\")'>Delete</a>"
-		];
-		
-	}
-	$response = [
-		"draw" => intval($draw),
-		"recordsTotal" => $totalRecords,
-		"recordsFiltered" => $filteredRecords,
-		"data" => $data
-	];
-	echo json_encode($response);
- }
- 
-
- // edit data 
- public function companyeditdata2($blog) {
-	$this->load->model('userlist');
-	// echo $blog; die;
-	$data['user'] = $this->userlist->companyeditdata2($blog);
-	$this->load->view('user/header');
-	$this->load->view('user/sidebar');
-	$this->load->view('user/topbar');
-	$this->load->view('user/update_address', $blog);
-	$this->load->view('user/footer');
- }
-	
- // for update
-	public function companyupdatedata2() {
-	// echo $blog; die;
-
-	   $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');   
-
-	$this->form_validation->set_rules('address', 'address', 'required');
-	// $this->form_validation->set_rules('latitude', 'latitude', 'required');
-	// $this->form_validation->set_rules('longitute', 'longitute', 'required');
-
-	 $data['address'] = $this->input->post('address');
-	 $data['latitude'] = $this->input->post('latitude');
-	 $data['longitute'] = $this->input->post('longitute');
-	 $data['mobile'] = $this->input->post('mobile');
-
-
-	 $data['company_id'] = $this->input->post('company_id');
-	 $user=$data['company_id'];
-	 if ($this->form_validation->run() == FALSE) {
-		$this->load->model('userlist');
-		$data['user'] = $this->userlist->companyeditdata2($blog);
-		$this->load->view('user/update_address',$data);
-		echo "hello";
-		die;
+	$company_id = $this->input->post('company_id');
+	$addressData = $this->userlist->getAddressByCompanyId($company_id);
+	if ($addressData) {
+		echo json_encode(['status' => 'success', 'data' => $addressData]);
 	} else {
-		// echo "qihqsi";
-		// die;
-		 $this->load->model('userlist');
-		$this->userlist->update_company2($user, $data);
-		// echo "hello";
-		// die;
-		redirect('UserController/companies');
-
-		
+		echo json_encode(['status' => 'error', 'message' => 'No address data found']);
 	}
-
- }
-  //for delete  
- public function delete_company2($company_id)
- {
-  $this->load->model('userlist');
-	 $this->userlist->delete_company2($company_id);	
-	//  print_r($data);die;
-	//  $this->load->view('user/update_companydata');
-	redirect('UserController/companies');
-
- }
-
-    public function adddata (){
-		// echo"jnbj,m";die;
-		$data['company_id'] = $this->input->post('company_id');
-    $data['address'] = $this->input->post('address');
-    $data['latitude'] = $this->input->post('latitude');
-    $data['longitute'] = $this->input->post('longitute');
-    $data['mobile'] = $this->input->post('mobile');
+}
+public function deleteCompanyAddress()
+{
     
-    // print_r($data);
-    // die;
-    $this->form_validation->set_rules('address', 'address', 'required');
-    // $this->form_validation->set_rules('latitude', 'latitude', 'required');
-    // $this->form_validation->set_rules('longitute', 'longitute', 'required');
-    // $this->form_validation->set_rules('mobile', 'mobile', 'required');
-    
-    
-    if ($this->form_validation->run() == FALSE)
-    {   echo"incomp";die;
-    	// $this->load->view('user/adduser'); 
-    	redirect('Welcome/getprofileData2');
+    $address_id = $this->input->post('address_id');
+
+    try {
+        
+        if (empty($address_id)) {
+            echo json_encode(['status' => 'error', 'message' => 'Address ID is missing']);
+            return;
+        }
+		$this->load->model('userlist');
+		$this->userlist->deleteCompanyAddress( $address_id);
+        // $this->db->where('id', $address_id);
+        // $this->db->delete('company_address');
+
+     
+        if ($this->db->affected_rows() > 0) {
+            echo json_encode(['status' => 'success', 'message' => 'Address deleted successfully']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Address not found or already deleted']);
+        }
+    } catch (Exception $e) {
+        log_message('error', 'Error deleting company address: ' . $e->getMessage());
+        echo json_encode(['status' => 'error', 'message' => 'Failed to delete address.']);
     }
-    else
-    {
-    	$this->load->model('userlist');
-    	$check = $this->userlist->adduser($data);
-		// print_r($check);die;
-    	if($check == true){
-    		redirect('UserController/companies');
-	//  $this->load->view('user/company_details');
+}
 
-    	}
-    }	
-    }	
+public function saveCompanyAddress()
+{
+    log_message('error', 'POST Data: ' . print_r($this->input->post(), true));
+
+    $companyid = $this->input->post('company_id');
+    $ids = $this->input->post('id');
+    $addresses = $this->input->post('Address');
+    $latitudes = $this->input->post('Latitude');
+    $longitudes = $this->input->post('Longitude');
+    $mobiles = $this->input->post('Mobile');
+
+    if (!$companyid || !$addresses || count($addresses) === 0) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid data received.']);
+        return;
+    }
+
+    $data = [];
+    for ($i = 0; $i < count($addresses); $i++) {
+        $data[] = [
+            'company_id' => $companyid,
+            'id' => $ids[$i] ?? null, 
+            'Address' => $addresses[$i],
+            'Latitude' => $latitudes[$i],
+            'Longitude' => $longitudes[$i],
+            'Mobile' => $mobiles[$i]
+        ];
+    }
+
+    try {
+        foreach ($data as $row) {
+            $id = $row['id'];
+            unset($row['id']); 
+
+            if ($id) {
+				$this->userlist->updateCompanyAddress($id, $row);
+                // $this->db->where('id', $id);
+                // $this->db->update('company_address', $row);
+            } else {
+				$this->userlist->insertCompanyAddress($row);
+                // $this->db->insert('company_address', $row);
+            }
+        }
+
+        echo json_encode(['status' => 'success', 'message' => 'Data saved successfully']);
+    } catch (Exception $e) {
+        log_message('error', 'Error saving company address: ' . $e->getMessage());
+        echo json_encode(['status' => 'error', 'message' => 'Failed to save data.']);
+    }
+}
+
 
 }
 
