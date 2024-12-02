@@ -716,6 +716,11 @@ public function getAddressByCompanyId($company_id) {
 
     return $query->result_array();
 }
+public function deleteCompanyAddress($address_id)
+{
+     $this->db->where('id', $address_id);
+        $this->db->delete('company_address');
+}
 public function insertCompanyAddress($data)
 {
     $this->db->insert('company_address', $data);

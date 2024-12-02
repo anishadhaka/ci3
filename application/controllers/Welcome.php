@@ -542,8 +542,7 @@ public function deleteCompanyAddress()
         }
 		$this->load->model('userlist');
 		$this->userlist->deleteCompanyAddress( $address_id);
-        // $this->db->where('id', $address_id);
-        // $this->db->delete('company_address');
+       
 
      
         if ($this->db->affected_rows() > 0) {
@@ -592,11 +591,9 @@ public function saveCompanyAddress()
 
             if ($id) {
 				$this->userlist->updateCompanyAddress($id, $row);
-                // $this->db->where('id', $id);
-                // $this->db->update('company_address', $row);
+               
             } else {
 				$this->userlist->insertCompanyAddress($row);
-                // $this->db->insert('company_address', $row);
             }
         }
 
