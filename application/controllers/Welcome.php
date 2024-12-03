@@ -65,10 +65,8 @@ public function getBlogData() {
 		foreach ($blogs as $blog) {
 			$data[] = [
 				$counter++,
-				// htmlspecialchars($blog->id),
 				htmlspecialchars($blog->Title),
 				htmlspecialchars($blog->name),
-				// htmlspecialchars($blog->description),
 				htmlspecialchars($blog->createdate),
 				htmlspecialchars($blog->updatedate),
 				"<img src='". base_url('uploads/images/'.$blog->image )."'height=100px;>",
